@@ -1,0 +1,54 @@
+/* Globals */
+.background-color-1 {
+	background-color: #dd2f45;
+}
+.background-color-2 {
+	background-color: #ffffff;
+}
+.background-color-3 {
+	background-color: #363432;
+}
+.no-background {
+	background: none;
+}
+
+/* Home Page */
+#Home {
+	color: #ffffff;
+}
+
+#Home .primary-btn {
+	border: 3px solid #363432;
+}
+
+#Home .secondary-btn {
+	border: 3px solid #ffffff;
+}
+
+/*TopMenu*/
+#TopMenu .icon-hamburger {
+	background-color: #ffffff;
+}
+
+/* Admin Page */
+#Admin button {
+	color: #ffffff;
+}
+
+#Admin button {
+	border: 3px solid #363432;
+}
+
+#Admin .teams > div:nth-child(odd),
+#Admin form {
+	background-color: #ffffff;
+}
+#Admin .teams > div:nth-child(even) {
+	background-color: #faf9f9;
+}
+
+#Admin .teams > div,
+#Admin form {
+	border: 1px solid #ebeaea;
+}
+

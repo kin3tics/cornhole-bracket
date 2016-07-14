@@ -1,0 +1,129 @@
+html, body, #app, #app > div, #app > div > div {
+	height: 100%;
+	margin: 0;
+}
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.vertical-align {
+  	top: 50%;
+  	transform: perspective(1px) translateY(-50%);
+}
+
+/*Branding*/
+#Home {
+	background-image: url("/images/floral-bg-red.jpg");
+}
+#Home .logo {
+	background-image: url("/images/icf-logo.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+
+#Home .icon {
+	background-image: url("/images/icon-cornhole.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 134px 70px;
+}
+
+#TopMenu .logo {
+	background-image: url("/images/icf-logo.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+#Admin {background-image: url("/images/floral-bg-gray.jpg");}
+
+/*Home*/
+#Home .container {
+	position: relative;
+}
+
+#Home .logo,
+#Home .icon,
+#Home .title,
+#Home .entry {
+	margin-left: auto;
+	margin-right: auto;
+	width: 60%;
+}
+#Home .logo,
+#Home .title {
+	width: 80%;
+}
+
+#Home .logo {
+	height: 70px;
+}
+#Home .icon {
+	height: 150px;
+}
+#Home .title {
+	height: 70px;
+	text-align: center;
+}
+#Home .entry {
+	height: 200px;
+	text-align: center;
+	margin-top: 50px;
+}
+#Home .entry > div {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#Home button {
+	padding: 15px;
+	width: 225px;
+	border-radius: 40px;
+}
+
+/*TopMenu*/
+#TopMenu {
+	height: 70px;
+}
+#TopMenu .logo {
+	height: 30px;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+#TopMenu .icon-hamburger {
+	height: 30px;
+	width: 30px;
+	margin-top: 20px;
+	margin-right: 20px;
+	float:right;
+	display: block;
+	cursor: pointer;
+}
+
+/*Admin*/
+#Admin .container {
+	text-align: center;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#Admin button {
+	padding: 15px;
+	width: 225px;
+	border-radius: 40px;
+}
+
+#Admin .teams {
+	margin-top: 25px;
+	text-align: left;
+}
+
+#Admin .teams span {
+	padding-left: 50px;
+}
+
+#Admin form {
+	margin-top: 25px;
+	padding: 15px;
+}
