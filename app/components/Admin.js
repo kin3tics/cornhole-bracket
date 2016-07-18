@@ -1,5 +1,6 @@
 import React from 'react';
 import TeamStore from '../stores/TeamStore';
+import TeamActions from '../actions/TeamActions';
 
 import AddTeam from './AddTeam';
 import TopMenu from './TopMenu';
@@ -24,10 +25,19 @@ class Admin extends React.Component {
 	componentWillUnmount() {
 		TeamStore.off(TeamEvents.LOADED, this.updateState);
 	}
-	
+	handleClick(e) {
+		var cur = this.state.showAdd;
+		this.setState({
+			showAdd: !cur
+		});
+	}
+	handleGenerateClick(e) {
+		TeamActions.generateBracket();
+	}
 	updateState() {
 		this.setState({
-			teams: TeamStore.getTeams()
+			teams: TeamStore.getTeams(),
+			showAdd: false
 		});
 	}
 	render() {
@@ -66,17 +76,13 @@ class Admin extends React.Component {
 					<div className="pure-u-1">
 						{teams}
 					</div>
+					<div className="pure-u-1">
+						<button onClick={this.handleGenerateClick} className="background-color-3">Add</button>
+					</div>
 				</div>
 			</div>
 
 		);
-	}
-	handleClick(e) {
-
-		var cur = this.state.showAdd;
-		this.setState({
-			showAdd: !cur
-		});
 	}
 };
 

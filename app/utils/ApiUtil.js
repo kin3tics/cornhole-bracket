@@ -1,5 +1,7 @@
 import xhr from './xhr';
 import teamActions from '../actions/TeamActions';
+import bracketActions from '../actions/BracketActions';
+import gameActions from '../actions/GameActions';
 //Stores
 
 var ApiUtils = {
@@ -26,8 +28,31 @@ var ApiUtils = {
 			else
 				teamActions.updateTeamSuccess(res);
 		})
+	},
+	generateBracket() {
+		xhr.getJSON(`/api/brackets/generate`, (err, res) => {
+			if (err)
+				bracketActions.generateBracketFail();
+			else
+				bracketActions.generateBracketSuccess();
+		})
+	},
+	loadBracket() {
+		xhr.getJSON(`/api/brackets/`, (err, res) => {
+			if (err)
+				bracketActions.loadBracketFail();
+			else
+				bracketActions.loadBracketSuccess(res);
+		})
+	},
+	loadGame(gameId) {
+		xhr.getJSON(`/api/games/` + gameId, (err,res) => {
+			if (err)
+				gameActions.loadGameFail();
+			else
+				gameActions.loadGameSuccess(res);
+		})
 	}
-
 }
 
 export default ApiUtils;

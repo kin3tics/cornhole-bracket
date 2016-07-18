@@ -26684,13 +26684,23 @@
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
+	var _Bracket = __webpack_require__(271);
+	
+	var _Bracket2 = _interopRequireDefault(_Bracket);
+	
+	var _Game = __webpack_require__(273);
+	
+	var _Game2 = _interopRequireDefault(_Game);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createElement(
 		_reactRouter.Route,
 		{ component: _App2.default },
 		_react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default }),
-		_react2.default.createElement(_reactRouter.Route, { path: '/admin', component: _Admin2.default })
+		_react2.default.createElement(_reactRouter.Route, { path: '/admin', component: _Admin2.default }),
+		_react2.default.createElement(_reactRouter.Route, { path: '/bracket', component: _Bracket2.default }),
+		_react2.default.createElement(_reactRouter.Route, { path: '/game/:gameId', component: _Game2.default })
 	);
 
 /***/ },
@@ -26891,15 +26901,19 @@
 	
 	var _TeamStore2 = _interopRequireDefault(_TeamStore);
 	
-	var _AddTeam = __webpack_require__(267);
+	var _TeamActions = __webpack_require__(244);
+	
+	var _TeamActions2 = _interopRequireDefault(_TeamActions);
+	
+	var _AddTeam = __webpack_require__(269);
 	
 	var _AddTeam2 = _interopRequireDefault(_AddTeam);
 	
-	var _TopMenu = __webpack_require__(268);
+	var _TopMenu = __webpack_require__(270);
 	
 	var _TopMenu2 = _interopRequireDefault(_TopMenu);
 	
-	var _constants = __webpack_require__(266);
+	var _constants = __webpack_require__(268);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26940,10 +26954,24 @@
 				_TeamStore2.default.off(TeamEvents.LOADED, this.updateState);
 			}
 		}, {
+			key: 'handleClick',
+			value: function handleClick(e) {
+				var cur = this.state.showAdd;
+				this.setState({
+					showAdd: !cur
+				});
+			}
+		}, {
+			key: 'handleGenerateClick',
+			value: function handleGenerateClick(e) {
+				_TeamActions2.default.generateBracket();
+			}
+		}, {
 			key: 'updateState',
 			value: function updateState() {
 				this.setState({
-					teams: _TeamStore2.default.getTeams()
+					teams: _TeamStore2.default.getTeams(),
+					showAdd: false
 				});
 			}
 		}, {
@@ -27031,18 +27059,18 @@
 							'div',
 							{ className: 'pure-u-1' },
 							teams
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement(
+								'button',
+								{ onClick: this.handleGenerateClick, className: 'background-color-3' },
+								'Add'
+							)
 						)
 					)
 				);
-			}
-		}, {
-			key: 'handleClick',
-			value: function handleClick(e) {
-	
-				var cur = this.state.showAdd;
-				this.setState({
-					showAdd: !cur
-				});
 			}
 		}]);
 	
@@ -27075,7 +27103,7 @@
 	
 	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
 	
-	var _constants = __webpack_require__(266);
+	var _constants = __webpack_require__(268);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27085,7 +27113,7 @@
 		teamsCache: [],
 		actions: [_TeamActions2.default.addTeam,
 		//actions.addTeamFail,
-		//actions.updateTeamSuccess,
+		_TeamActions2.default.updateTeamSuccess,
 		//actions.updateTeamFail,
 		_TeamActions2.default.getTeamsSuccess],
 		addTeam: function addTeam(teamId, teamName, teamMembers) {
@@ -28020,6 +28048,14 @@
 	
 	var _TeamActions2 = _interopRequireDefault(_TeamActions);
 	
+	var _BracketActions = __webpack_require__(266);
+	
+	var _BracketActions2 = _interopRequireDefault(_BracketActions);
+	
+	var _GameActions = __webpack_require__(267);
+	
+	var _GameActions2 = _interopRequireDefault(_GameActions);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	//Stores
@@ -28038,6 +28074,21 @@
 		deleteTeam: function deleteTeam(team) {
 			_xhr2.default.postJSON('/api/teams/' + team.teamId + '/delete', team, function (err, res) {
 				if (err) _TeamActions2.default.updateTeamFail();else _TeamActions2.default.updateTeamSuccess(res);
+			});
+		},
+		generateBracket: function generateBracket() {
+			_xhr2.default.getJSON('/api/brackets/generate', function (err, res) {
+				if (err) _BracketActions2.default.generateBracketFail();else _BracketActions2.default.generateBracketSuccess();
+			});
+		},
+		loadBracket: function loadBracket() {
+			_xhr2.default.getJSON('/api/brackets/', function (err, res) {
+				if (err) _BracketActions2.default.loadBracketFail();else _BracketActions2.default.loadBracketSuccess(res);
+			});
+		},
+		loadGame: function loadGame(gameId) {
+			_xhr2.default.getJSON('/api/games/' + gameId, function (err, res) {
+				if (err) _GameActions2.default.loadGameFail();else _GameActions2.default.loadGameSuccess(res);
 			});
 		}
 	};
@@ -29286,6 +29337,46 @@
 
 /***/ },
 /* 266 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _fluxReact = __webpack_require__(239);
+	
+	var _fluxReact2 = _interopRequireDefault(_fluxReact);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var BracketActions = _fluxReact2.default.createActions(['generateBracket', 'generateBracketSuccess', 'generateBracketFail', 'loadBracketSuccess', 'loadBracketFail']);
+	
+	exports.default = BracketActions;
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _fluxReact = __webpack_require__(239);
+	
+	var _fluxReact2 = _interopRequireDefault(_fluxReact);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var GameActions = _fluxReact2.default.createActions(['loadGameSuccess', 'loadGameFail']);
+	
+	exports.default = GameActions;
+
+/***/ },
+/* 268 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29294,12 +29385,19 @@
 	    Events: {
 	        TeamEvents: {
 	            LOADED: "team.loaded"
+	        },
+	        BracketEvents: {
+	            GENERATED: "bracket.generated",
+	            LOADED: "bracket.loaded"
+	        },
+	        GameEvents: {
+	            LOADED: "game.loaded"
 	        }
 	    }
 	};
 
 /***/ },
-/* 267 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29440,7 +29538,7 @@
 	exports.default = AddTeam;
 
 /***/ },
-/* 268 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29496,6 +29594,531 @@
 	}(_react2.default.Component);
 	
 	exports.default = TopMenu;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(33);
+	
+	var _BracketStore = __webpack_require__(272);
+	
+	var _BracketStore2 = _interopRequireDefault(_BracketStore);
+	
+	var _TopMenu = __webpack_require__(270);
+	
+	var _TopMenu2 = _interopRequireDefault(_TopMenu);
+	
+	var _constants = __webpack_require__(268);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BracketEvents = _constants.Events.BracketEvents;
+	
+	var Bracket = function (_React$Component) {
+		_inherits(Bracket, _React$Component);
+	
+		function Bracket(props) {
+			_classCallCheck(this, Bracket);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Bracket).call(this, props));
+	
+			_this.updateState = _this.updateState.bind(_this);
+			_this.state = {
+				bracket: _BracketStore2.default.getBracket()
+			};
+			return _this;
+		}
+	
+		_createClass(Bracket, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_BracketStore2.default.fetchBracket();
+				_BracketStore2.default.on(BracketEvents.LOADED, this.updateState);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_BracketStore2.default.off(BracketEvents.LOADED, this.updateState);
+			}
+		}, {
+			key: 'updateState',
+			value: function updateState() {
+				this.setState({
+					bracket: _BracketStore2.default.getBracket()
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var games = _react2.default.createElement(
+					'div',
+					null,
+					' Bracket has not been generated yet. '
+				);
+				if (this.state.bracket && this.state.bracket.length > 1 && this.state.bracket[0].rounds && this.state.bracket[0].rounds.length > 1 && this.state.bracket[0].rounds[0].games && this.state.bracket[0].rounds[0].games.length > 1) {
+					games = _react2.default.createElement(
+						'div',
+						{ className: 'games' },
+						this.state.bracket[0].rounds[0].games.map(function (game) {
+							return _react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									_reactRouter.Link,
+									{ to: '/game/' + game.gameId },
+									_react2.default.createElement(
+										'div',
+										{ key: game.gameId, className: 'gamelet pure-g' },
+										_react2.default.createElement(
+											'div',
+											{ className: 'pure-u-1 relative' },
+											_react2.default.createElement(
+												'span',
+												{ className: 'vertical-align' },
+												game.team1.teamName
+											)
+										),
+										_react2.default.createElement(
+											'div',
+											{ className: 'pure-u-1 relative' },
+											_react2.default.createElement(
+												'span',
+												{ className: 'vertical-align' },
+												game.team2.teamName
+											)
+										)
+									)
+								)
+							);
+						})
+					);
+				}
+				return _react2.default.createElement(
+					'div',
+					{ id: 'Bracket' },
+					_react2.default.createElement(_TopMenu2.default, null),
+					_react2.default.createElement(
+						'div',
+						{ className: 'container pure-g' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement(
+								'h3',
+								null,
+								'Games'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							games
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Bracket;
+	}(_react2.default.Component);
+	
+	;
+	
+	exports.default = Bracket;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _fluxReact = __webpack_require__(239);
+	
+	var _fluxReact2 = _interopRequireDefault(_fluxReact);
+	
+	var _BracketActions = __webpack_require__(266);
+	
+	var _BracketActions2 = _interopRequireDefault(_BracketActions);
+	
+	var _ApiUtil = __webpack_require__(245);
+	
+	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
+	
+	var _constants = __webpack_require__(268);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var BracketEvents = _constants.Events.BracketEvents;
+	
+	var BracketStore = _fluxReact2.default.createStore({
+		bracketCache: [],
+		actions: [_BracketActions2.default.generateBracket, _BracketActions2.default.generateBracketSuccess, _BracketActions2.default.generateBracketFail, _BracketActions2.default.loadBracketSuccess, _BracketActions2.default.loadBracketFail],
+		generateBracket: function generateBracket() {
+			_ApiUtil2.default.generateBracket();
+		},
+		generateBracketSuccess: function generateBracketSuccess() {
+			this.emit(BracketEvents.GENERATED);
+		},
+		generateBracketFail: function generateBracketFail() {
+			//Failure message?
+		},
+		loadBracketSuccess: function loadBracketSuccess(bracket) {
+			this.bracketCache = bracket.data;
+			this.emit(BracketEvents.LOADED);
+		},
+		loadBracketFail: function loadBracketFail() {
+			//Failure message?
+		},
+	
+		exports: {
+			fetchBracket: function fetchBracket() {
+				_ApiUtil2.default.loadBracket();
+			},
+			getBracket: function getBracket() {
+				return this.bracketCache;
+			}
+		}
+	});
+	
+	exports.default = BracketStore;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _GameStore = __webpack_require__(274);
+	
+	var _GameStore2 = _interopRequireDefault(_GameStore);
+	
+	var _TopMenu = __webpack_require__(270);
+	
+	var _TopMenu2 = _interopRequireDefault(_TopMenu);
+	
+	var _TeamMatch = __webpack_require__(275);
+	
+	var _TeamMatch2 = _interopRequireDefault(_TeamMatch);
+	
+	var _constants = __webpack_require__(268);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var GameEvents = _constants.Events.GameEvents;
+	
+	var Game = function (_React$Component) {
+		_inherits(Game, _React$Component);
+	
+		function Game(props) {
+			_classCallCheck(this, Game);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Game).call(this, props));
+	
+			_this.state = {
+				gameId: props.params.gameId,
+				game: _GameStore2.default.getGame(props.params.gameId)
+			};
+			_this.updateState = _this.updateState.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Game, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_GameStore2.default.fetchGame(this.state.gameId);
+				_GameStore2.default.on(GameEvents.LOADED, this.updateState);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_GameStore2.default.off(GameEvents.LOADED, this.updateState);
+			}
+		}, {
+			key: 'updateState',
+			value: function updateState() {
+				this.setState({
+					game: _GameStore2.default.getGame(this.state.gameId)
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var team1name = "Team 1";
+				var team2name = "Team 2";
+				var team1score = 0;
+				var team2score = 0;
+				if (this.state.game && this.state.game.team1) {
+					team1name = this.state.game.team1.teamName;
+				}
+				if (this.state.game && this.state.game.team2) {
+					team2name = this.state.game.team2.teamName;
+				}
+				if (this.state.game) {
+					team1score = this.state.game.team1score ? this.state.game.team1score : 0;
+					team2score = this.state.game.team2score ? this.state.game.team2score : 0;
+				}
+	
+				var buttons = _react2.default.createElement(
+					'h3',
+					null,
+					' Buttons go here '
+				);
+				return _react2.default.createElement(
+					'div',
+					{ id: 'Game' },
+					_react2.default.createElement(_TopMenu2.default, null),
+					_react2.default.createElement(
+						'div',
+						{ className: 'container pure-g' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'team1 pure-u-1' },
+							_react2.default.createElement(_TeamMatch2.default, { team: team1name, score: team1score })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'team2 pure-u-1' },
+							_react2.default.createElement(_TeamMatch2.default, { team: team2name, score: team2score })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'buttons background-color-1 pure-u-1' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'pure-g' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'pure-u-1' },
+									_react2.default.createElement(
+										'button',
+										{ className: 'no-background' },
+										'SUBMIT GAME'
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'pure-u-1' },
+									_react2.default.createElement(
+										'span',
+										null,
+										'FORFEIT GAME'
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Game;
+	}(_react2.default.Component);
+	
+	exports.default = Game;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _fluxReact = __webpack_require__(239);
+	
+	var _fluxReact2 = _interopRequireDefault(_fluxReact);
+	
+	var _GameActions = __webpack_require__(267);
+	
+	var _GameActions2 = _interopRequireDefault(_GameActions);
+	
+	var _ApiUtil = __webpack_require__(245);
+	
+	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
+	
+	var _constants = __webpack_require__(268);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var GameEvents = _constants.Events.GameEvents;
+	
+	var GameStore = _fluxReact2.default.createStore({
+		gameCache: [],
+		actions: [_GameActions2.default.loadGameSuccess, _GameActions2.default.loadGameFail],
+		loadGameSuccess: function loadGameSuccess(game) {
+			this.gameCache[game.data.gameId] = game.data;
+			this.emit(GameEvents.LOADED);
+		},
+		loadGameFail: function loadGameFail() {
+			//throw error message?
+		},
+	
+		exports: {
+			fetchGame: function fetchGame(gameId) {
+				_ApiUtil2.default.loadGame(gameId);
+			},
+			getGame: function getGame(gameId) {
+				return this.gameCache[gameId];
+			}
+		}
+	});
+	
+	exports.default = GameStore;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _GameStore = __webpack_require__(274);
+	
+	var _GameStore2 = _interopRequireDefault(_GameStore);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TeamMatch = function (_React$Component) {
+		_inherits(TeamMatch, _React$Component);
+	
+		function TeamMatch(props) {
+			_classCallCheck(this, TeamMatch);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TeamMatch).call(this, props));
+	
+			_this.state = {
+				teamName: props.team,
+				score: props.score
+			};
+			return _this;
+		}
+	
+		_createClass(TeamMatch, [{
+			key: 'componentWillReceiveProps',
+			value: function componentWillReceiveProps(newProps) {
+				this.setState({
+					teamName: newProps.team,
+					score: newProps.score
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'pure-g' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'team-name pure-u-1' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							' ',
+							this.state.teamName
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'score background-color-2 pure-u-1' },
+						_react2.default.createElement(
+							'h1',
+							null,
+							' ',
+							this.state.score,
+							' '
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'sub-score background-color-2 pure-u-1-2' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'-'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'add-score background-color-2 pure-u-1-2' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'+'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'bullseye background-color-4 pure-u-1' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'BULLSEYE'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return TeamMatch;
+	}(_react2.default.Component);
+	
+	exports.default = TeamMatch;
 
 /***/ }
 /******/ ]);

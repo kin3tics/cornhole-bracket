@@ -10,7 +10,7 @@ var TeamStore = flux.createStore({
 	actions: [
 		actions.addTeam,
 		//actions.addTeamFail,
-		//actions.updateTeamSuccess,
+		actions.updateTeamSuccess,
 		//actions.updateTeamFail,
 		actions.getTeamsSuccess,
 		//actions.getTeamsFail,

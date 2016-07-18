@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 var bracketSchema = new mongoose.Schema({
-	round: Number,
+	type: Number, //0 = winner bracket; 1 loser bracket; 2 championship
 	bracketId: mongoose.Schema.ObjectId,
-	games: [{ type : mongoose.Schema.ObjectId, ref: 'Game' }]
+	rounds: [{ type : mongoose.Schema.ObjectId, ref: 'Round' }]
 });
 
 export default mongoose.model('Bracket', bracketSchema);

@@ -3,6 +3,12 @@ html, body, #app, #app > div, #app > div > div {
 	margin: 0;
 }
 
+.pure-g > div {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
 .relative { position: relative; }
 .absolute { position: absolute; }
 .vertical-align {
@@ -34,7 +40,7 @@ html, body, #app, #app > div, #app > div > div {
 	background-size: contain;
 }
 
-#Admin {background-image: url("/images/floral-bg-gray.jpg");}
+#Admin, #Game {background-image: url("/images/floral-bg-gray.jpg");}
 
 /*Home*/
 #Home .container {
@@ -98,6 +104,46 @@ html, body, #app, #app > div, #app > div > div {
 	float:right;
 	display: block;
 	cursor: pointer;
+}
+/* Game */
+#Game {
+	height: 100%;
+	overflow-x: scroll;
+}
+#Game .container {
+	text-align: center;
+}
+
+#Game .team1,
+#Game .team2 {
+	margin-top: 25px;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#Game .sub-score,
+#Game .add-score {
+	cursor: pointer;
+}
+
+#Game .buttons {
+	margin-top: 25px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+#Game .buttons button {
+	padding: 15px;
+	width: 225px;
+	border-radius: 40px;
+}
+
+#Game .buttons span {
+	margin-top: 15px;
+	text-decoration: underline;
+	cursor: pointer;
+	display: block;
 }
 
 /*Admin*/
