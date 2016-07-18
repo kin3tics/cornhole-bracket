@@ -28090,6 +28090,11 @@
 			_xhr2.default.getJSON('/api/games/' + gameId, function (err, res) {
 				if (err) _GameActions2.default.loadGameFail();else _GameActions2.default.loadGameSuccess(res);
 			});
+		},
+		updateGame: function updateGame(game) {
+			_xhr2.default.postJSON('/api/games/' + game.gameId, game, function (err, res) {
+				if (err) _GameActions2.default.updateGameFail();else _GameActions2.default.updateGameSuccess(res);
+			});
 		}
 	};
 	
@@ -29371,7 +29376,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var GameActions = _fluxReact2.default.createActions(['loadGameSuccess', 'loadGameFail']);
+	var GameActions = _fluxReact2.default.createActions(['loadGameSuccess', 'loadGameFail', 'updateGameSuccess', 'updateGameFail']);
 	
 	exports.default = GameActions;
 
@@ -29858,6 +29863,9 @@
 				game: _GameStore2.default.getGame(props.params.gameId)
 			};
 			_this.updateState = _this.updateState.bind(_this);
+			_this.handleTeam1ScoreChange = _this.handleTeam1ScoreChange.bind(_this);
+			_this.handleTeam2ScoreChange = _this.handleTeam2ScoreChange.bind(_this);
+			_this.handleGameSubmit = _this.handleGameSubmit.bind(_this);
 			return _this;
 		}
 	
@@ -29880,6 +29888,27 @@
 				});
 			}
 		}, {
+			key: 'handleTeam1ScoreChange',
+			value: function handleTeam1ScoreChange(scoreChange) {
+				var game = this.state.game;
+				game.team1Score = game.team1Score + scoreChange;
+				_GameStore2.default.updateGame(game);
+			}
+		}, {
+			key: 'handleTeam2ScoreChange',
+			value: function handleTeam2ScoreChange(scoreChange) {
+				var game = this.state.game;
+				game.team2Score = game.team2Score + scoreChange;
+				_GameStore2.default.updateGame(game);
+			}
+		}, {
+			key: 'handleGameSubmit',
+			value: function handleGameSubmit() {
+				var game = this.state.game;
+				game.gameStatus = 2;
+				_GameStore2.default.updateGame(game);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var team1name = "Team 1";
@@ -29893,8 +29922,8 @@
 					team2name = this.state.game.team2.teamName;
 				}
 				if (this.state.game) {
-					team1score = this.state.game.team1score ? this.state.game.team1score : 0;
-					team2score = this.state.game.team2score ? this.state.game.team2score : 0;
+					team1score = this.state.game.team1Score ? this.state.game.team1Score : 0;
+					team2score = this.state.game.team2Score ? this.state.game.team2Score : 0;
 				}
 	
 				var buttons = _react2.default.createElement(
@@ -29912,12 +29941,12 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'team1 pure-u-1' },
-							_react2.default.createElement(_TeamMatch2.default, { team: team1name, score: team1score })
+							_react2.default.createElement(_TeamMatch2.default, { team: team1name, score: team1score, teamScoreChange: this.handleTeam1ScoreChange })
 						),
 						_react2.default.createElement(
 							'div',
 							{ className: 'team2 pure-u-1' },
-							_react2.default.createElement(_TeamMatch2.default, { team: team2name, score: team2score })
+							_react2.default.createElement(_TeamMatch2.default, { team: team2name, score: team2score, teamScoreChange: this.handleTeam2ScoreChange })
 						),
 						_react2.default.createElement(
 							'div',
@@ -29930,7 +29959,7 @@
 									{ className: 'pure-u-1' },
 									_react2.default.createElement(
 										'button',
-										{ className: 'no-background' },
+										{ className: 'no-background', onClick: this.handleGameSubmit },
 										'SUBMIT GAME'
 									)
 								),
@@ -29985,12 +30014,19 @@
 	
 	var GameStore = _fluxReact2.default.createStore({
 		gameCache: [],
-		actions: [_GameActions2.default.loadGameSuccess, _GameActions2.default.loadGameFail],
+		actions: [_GameActions2.default.loadGameSuccess, _GameActions2.default.loadGameFail, _GameActions2.default.updateGameSuccess, _GameActions2.default.updateGameFail],
 		loadGameSuccess: function loadGameSuccess(game) {
 			this.gameCache[game.data.gameId] = game.data;
 			this.emit(GameEvents.LOADED);
 		},
 		loadGameFail: function loadGameFail() {
+			//throw error message?
+		},
+		updateGameSuccess: function updateGameSuccess(game) {
+			this.gameCache[game.data.gameId] = game.data;
+			this.emit(GameEvents.LOADED);
+		},
+		updateGameFail: function updateGameFail() {
 			//throw error message?
 		},
 	
@@ -30000,6 +30036,9 @@
 			},
 			getGame: function getGame(gameId) {
 				return this.gameCache[gameId];
+			},
+			updateGame: function updateGame(game) {
+				_ApiUtil2.default.updateGame(game);
 			}
 		}
 	});
@@ -30046,6 +30085,9 @@
 				teamName: props.team,
 				score: props.score
 			};
+			_this.handleScorePlus = _this.handleScorePlus.bind(_this);
+			_this.handleScoreMinus = _this.handleScoreMinus.bind(_this);
+			_this.handleScore = props.teamScoreChange;
 			return _this;
 		}
 	
@@ -30056,6 +30098,16 @@
 					teamName: newProps.team,
 					score: newProps.score
 				});
+			}
+		}, {
+			key: 'handleScorePlus',
+			value: function handleScorePlus() {
+				this.handleScore(1);
+			}
+		}, {
+			key: 'handleScoreMinus',
+			value: function handleScoreMinus() {
+				this.handleScore(-1);
 			}
 		}, {
 			key: 'render',
@@ -30086,7 +30138,7 @@
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'sub-score background-color-2 pure-u-1-2' },
+						{ className: 'sub-score background-color-2 pure-u-1-2', onClick: this.handleScoreMinus },
 						_react2.default.createElement(
 							'h3',
 							null,
@@ -30095,7 +30147,7 @@
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'add-score background-color-2 pure-u-1-2' },
+						{ className: 'add-score background-color-2 pure-u-1-2', onClick: this.handleScorePlus },
 						_react2.default.createElement(
 							'h3',
 							null,

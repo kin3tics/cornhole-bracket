@@ -4,15 +4,15 @@ import Game from '../../models/game';
 var gamesRouter = express.Router();
 
 function FinishGame(game) {
-	var newGameBracket = game.bracket + 1;
+	var newGameRound = game.round + 1;
 	var newGameIndex = (game.index - (game.index % 4)) / 4;
 	Game
 		.findOne({ 
-			bracket: newGameBracket,
+			round: newGameRound,
 			index: newGameIndex 
 		})
 		.exec(function(err, newGame) {
-			var winningTeam = team1Score > team2Score ? team1 : team2;
+			var winningTeam = game.team1Score > game.team2Score ? game.team1 : game.team2;
 			if(err) throw err;
 			if(((newGameIndex * 4) + 2) > game.index) {
 				newGame.team1 = winningTeam;
@@ -91,10 +91,14 @@ gamesRouter.post('/:id', function(req, res, next) {
 		.findOne({ gameId: data.gameId }, function(err, game) {
 			if (err) return next(err);
 
-			if(!team) {
+			if(!game) {
 				return res.status(404).send({ message: 'Game ' + gameId + ' not found.' });
 			}
-			
+			var canFinish = false;
+			//If the game hasn't started yet, start it
+			if(game.gameStatus == 0 && (data.team1Score > 0 || data.team2Score > 0)) {
+				game.gameStatus = 1;
+			}
 			if(game.gameStatus == 1) {
 				game.team1Score = data.team1Score;
 				game.team2Score = data.team2Score;
@@ -102,16 +106,19 @@ gamesRouter.post('/:id', function(req, res, next) {
 				if(game.team1Score != data.team1Score
 					|| game.team2Score != data.team2Score)
 				{
-					return res.status(500).send({ message: 'Game ' + gameId + ' not In Progess. Cannot change score.'});					
+					return res.status(500).send({ message: 'Game ' + data.gameId + ' not In Progess. Cannot change score.'});					
 				}
+			}
+			if (data.gameStatus == 2 && (data.team1Score == 21 || data.team2Score == 21)) {
+				game.gameStatus == 2;
 			}
 			game.gameStatus = data.gameStatus;
 			game.save(function(err) {
 				if(err) throw err;
-				FinishGame();
+				if(game.gameStatus == 2) { FinishGame(game); }
 			})
 
-			res.send(team);
+			res.send(game);
 		});
 });
 

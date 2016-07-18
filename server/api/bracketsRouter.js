@@ -8,14 +8,18 @@ import Round from '../../models/round';
 
 var bracketsRouter = express.Router();
 
-function generateGames(numGames, round) {
+function generateGames(numGames, round, bracket) {
 	var games = [];
 	for(var j = 0; j < numGames; j++) {
 		var game = new Game({
 			gameId: mongoose.Types.ObjectId(),
 			round: round,
 			index: j,
-			gameStatus: 0
+			gameStatus: 0,
+			team1Score: 0,
+			team2Score: 0,
+			team1: null,
+			team2: null
 		});
 		game.save(function(err) {
 			if(err) throw err;
@@ -24,8 +28,8 @@ function generateGames(numGames, round) {
 	}
 	return games;
 }
-function generateRound(numGames, round) {
-	var games = generateGames(numGames, round);
+function generateRound(numGames, round, bracket) {
+	var games = generateGames(numGames, round, bracket);
 	var round = new Round({
 		round: round,
 		roundId: mongoose.Types.ObjectId(),
@@ -41,7 +45,7 @@ function generateBracket(numTeams, bracketType) {
 	var rounds = [];
 	for(var i = 0; i < numRounds; i++) {
 		var numGames = (numTeams + (numTeams % 2)) / Math.pow(2, i + 1);
-		var round = generateRound(numGames, i + 1);
+		var round = generateRound(numGames, i + 1, bracketType);
 		rounds.push(round);
 	}
 	var bracket = new Bracket({

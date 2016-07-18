@@ -52,6 +52,14 @@ var ApiUtils = {
 			else
 				gameActions.loadGameSuccess(res);
 		})
+	},
+	updateGame(game) {
+		xhr.postJSON(`/api/games/` + game.gameId, game, (err, res) => {
+			if(err)
+				gameActions.updateGameFail();
+			else
+				gameActions.updateGameSuccess(res);
+		})
 	}
 }
 

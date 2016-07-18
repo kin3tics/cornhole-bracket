@@ -9,7 +9,9 @@ var GameStore = flux.createStore({
 	gameCache: [],
 	actions: [
 		actions.loadGameSuccess,
-		actions.loadGameFail
+		actions.loadGameFail,
+		actions.updateGameSuccess,
+		actions.updateGameFail
 	],
 	loadGameSuccess(game) {
 		this.gameCache[game.data.gameId] = game.data;
@@ -18,12 +20,22 @@ var GameStore = flux.createStore({
 	loadGameFail() {
 		//throw error message?
 	},
+	updateGameSuccess(game) {
+		this.gameCache[game.data.gameId] = game.data;
+		this.emit(GameEvents.LOADED);
+	},
+	updateGameFail() {
+		//throw error message?
+	},
 	exports: {
 		fetchGame(gameId) {
 			ApiUtil.loadGame(gameId);
 		},
 		getGame(gameId) {
 			return this.gameCache[gameId];
+		},
+		updateGame(game) {
+			ApiUtil.updateGame(game);
 		}
 	}
 });

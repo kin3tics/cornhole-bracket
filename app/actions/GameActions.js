@@ -2,7 +2,9 @@ import flux from 'flux-react';
 
 var GameActions = flux.createActions([
 	'loadGameSuccess',
-	'loadGameFail'
+	'loadGameFail',
+	'updateGameSuccess',
+	'updateGameFail'
 ]);
 
 export default GameActions;
