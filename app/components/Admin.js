@@ -77,7 +77,7 @@ class Admin extends React.Component {
 						{teams}
 					</div>
 					<div className="pure-u-1">
-						<button onClick={this.handleGenerateClick} className="background-color-3">Add</button>
+						<button onClick={this.handleGenerateClick} className="background-color-3">Generate Bracket</button>
 					</div>
 				</div>
 			</div>

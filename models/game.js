@@ -4,6 +4,7 @@ var gameSchema = new mongoose.Schema({
 	gameId: mongoose.Schema.ObjectId,
 	team1: { type: mongoose.Schema.ObjectId, ref: 'Team' },
 	team2: { type: mongoose.Schema.ObjectId, ref: 'Team' },
+	bracket: Number,
 	round: Number,
 	index: Number,
 	team1Score: Number,

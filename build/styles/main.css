@@ -50,7 +50,8 @@ html, body, #app, #app > div, #app > div > div {
 #Home .logo,
 #Home .icon,
 #Home .title,
-#Home .entry {
+#Home .entry,
+#Home form {
 	margin-left: auto;
 	margin-right: auto;
 	width: 60%;

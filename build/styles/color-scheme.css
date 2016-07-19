@@ -16,9 +16,12 @@
 }
 
 /* Home Page */
-#Home {
+#Home,
+#Home a,
+#Home a:visited {
 	color: #ffffff;
 }
+
 
 #Home .primary-btn {
 	border: 3px solid #363432;
@@ -28,6 +31,9 @@
 	border: 3px solid #ffffff;
 }
 
+#Home input {
+	color: #000000;
+}
 /*TopMenu*/
 #TopMenu .icon-hamburger {
 	background-color: #ffffff;

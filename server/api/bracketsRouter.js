@@ -13,6 +13,7 @@ function generateGames(numGames, round, bracket) {
 	for(var j = 0; j < numGames; j++) {
 		var game = new Game({
 			gameId: mongoose.Types.ObjectId(),
+			bracket: bracket,
 			round: round,
 			index: j,
 			gameStatus: 0,

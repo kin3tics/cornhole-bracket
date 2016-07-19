@@ -1,5 +1,6 @@
 import React from 'react';
 import GameStore from '../stores/GameStore';
+import LoginStore from '../stores/LoginStore';
 
 import TopMenu from './TopMenu';
 import TeamMatch from './TeamMatch';
@@ -12,7 +13,8 @@ class Game extends React.Component {
 		super(props);
 		this.state = {
 			gameId: props.params.gameId,
-			game: GameStore.getGame(props.params.gameId)
+			game: GameStore.getGame(props.params.gameId),
+			isLoggedIn: LoginStore.status()
 		}
 		this.updateState = this.updateState.bind(this);
 		this.handleTeam1ScoreChange = this.handleTeam1ScoreChange.bind(this);
@@ -51,6 +53,7 @@ class Game extends React.Component {
 		var team2name = "Team 2";
 		var team1score = 0;
 		var team2score = 0;
+		var buttons = "";
 		if ( this.state.game && this.state.game.team1) {
 			team1name = this.state.game.team1.teamName;
 		}
@@ -61,8 +64,20 @@ class Game extends React.Component {
 			team1score = (this.state.game.team1Score) ? this.state.game.team1Score : 0;
 			team2score = (this.state.game.team2Score) ? this.state.game.team2Score : 0;
 		}
-
-		var buttons = (<h3> Buttons go here </h3>);
+		if (this.state.isLoggedIn) {
+			buttons = (
+				<div className="buttons background-color-1 pure-u-1">
+					<div className="pure-g">
+						<div className="pure-u-1">
+							<button className="no-background" onClick={this.handleGameSubmit}>SUBMIT GAME</button>
+						</div>
+						{/*<div className="pure-u-1">
+							<span>FORFEIT GAME</span>
+						</div>*/}
+					</div>
+				</div>
+			);
+		}
 		return (
 			<div id="Game">
 				<TopMenu />
@@ -73,18 +88,8 @@ class Game extends React.Component {
 					<div className="team2 pure-u-1">
 						<TeamMatch team={team2name} score={team2score} teamScoreChange={this.handleTeam2ScoreChange} />
 					</div>
-					<div className="buttons background-color-1 pure-u-1">
-						<div className="pure-g">
-							<div className="pure-u-1">
-								<button className="no-background" onClick={this.handleGameSubmit}>SUBMIT GAME</button>
-							</div>
-							<div className="pure-u-1">
-								<span>FORFEIT GAME</span>
-							</div>
-						</div>
-					</div>
+					{buttons}
 				</div>
-				
 			</div>
 			);
 	}

@@ -26680,15 +26680,15 @@
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Admin = __webpack_require__(237);
+	var _Admin = __webpack_require__(248);
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
-	var _Bracket = __webpack_require__(271);
+	var _Bracket = __webpack_require__(277);
 	
 	var _Bracket2 = _interopRequireDefault(_Bracket);
 	
-	var _Game = __webpack_require__(273);
+	var _Game = __webpack_require__(279);
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
@@ -26760,7 +26760,7 @@
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -26771,6 +26771,12 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(33);
+	
+	var _LoginStore = __webpack_require__(237);
+	
+	var _LoginStore2 = _interopRequireDefault(_LoginStore);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26783,93 +26789,163 @@
 	var Home = function (_React$Component) {
 		_inherits(Home, _React$Component);
 	
-		function Home() {
+		function Home(props) {
 			_classCallCheck(this, Home);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Home).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Home).call(this, props));
+	
+			_this.state = {
+				showLogin: false,
+				password: ""
+			};
+			_this.updatePassword = _this.updatePassword.bind(_this);
+			_this.handleModeratorLogin = _this.handleModeratorLogin.bind(_this);
+			_this.handleSubmit = _this.handleSubmit.bind(_this);
+			return _this;
 		}
 	
 		_createClass(Home, [{
-			key: "render",
+			key: 'updatePassword',
+			value: function updatePassword(e) {
+				this.setState({ password: e.target.value });
+			}
+		}, {
+			key: 'handleModeratorLogin',
+			value: function handleModeratorLogin(e) {
+				this.setState({ showLogin: true });
+			}
+		}, {
+			key: 'handleSubmit',
+			value: function handleSubmit(e) {
+				if (_LoginStore2.default.logIn(this.state.password)) {
+					_reactRouter.browserHistory.push('/bracket');
+				}
+			}
+		}, {
+			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ id: "Home", className: "background-color-1" },
-					_react2.default.createElement(
-						"div",
-						{ className: "container vertical-align pure-g" },
+				var login = "";
+				if (this.state.showLogin) {
+					login = _react2.default.createElement(
+						'div',
+						{ className: 'container vertical-align pure-g' },
 						_react2.default.createElement(
-							"div",
-							{ className: "pure-u-1" },
-							_react2.default.createElement("div", { className: "logo" })
-						),
-						_react2.default.createElement(
-							"div",
-							{ className: "pure-u-1" },
-							_react2.default.createElement("div", { className: "icon" })
-						),
-						_react2.default.createElement(
-							"div",
-							{ className: "pure-u-1" },
+							'div',
+							{ className: 'pure-u-1' },
 							_react2.default.createElement(
-								"div",
-								{ className: "title" },
+								'form',
+								{ onSubmit: this.handleSubmit, className: 'pure-form pure-form-aligned' },
 								_react2.default.createElement(
-									"div",
+									'fieldset',
 									null,
 									_react2.default.createElement(
-										"span",
-										null,
-										"LUAU 2016"
-									)
-								),
-								_react2.default.createElement(
-									"div",
-									null,
+										'div',
+										{ className: 'pure-control-group' },
+										_react2.default.createElement(
+											'label',
+											{ htmlFor: 'Pass' },
+											'Password'
+										),
+										_react2.default.createElement('input', { id: 'Pass', type: 'password', onChange: this.updatePassword, autoFocus: true })
+									),
 									_react2.default.createElement(
-										"h2",
-										null,
-										"Cornhole Tournament"
-									)
-								)
-							)
-						),
-						_react2.default.createElement(
-							"div",
-							{ className: "pure-u-1" },
-							_react2.default.createElement(
-								"div",
-								{ className: "entry" },
-								_react2.default.createElement(
-									"div",
-									null,
-									_react2.default.createElement(
-										"span",
-										null,
-										"USE APP AS"
-									)
-								),
-								_react2.default.createElement(
-									"div",
-									null,
-									_react2.default.createElement(
-										"button",
-										{ className: "primary-btn background-color-3" },
-										"COMPETITOR"
-									)
-								),
-								_react2.default.createElement(
-									"div",
-									null,
-									_react2.default.createElement(
-										"button",
-										{ className: "secondary-btn no-background" },
-										"MODERATOR"
+										'div',
+										{ className: 'pure-controls' },
+										_react2.default.createElement(
+											'button',
+											{ className: 'background-color-3 primary-btn' },
+											'Login'
+										)
 									)
 								)
 							)
 						)
-					)
+					);
+				} else {
+					login = _react2.default.createElement(
+						'div',
+						{ className: 'container vertical-align pure-g' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement('div', { className: 'logo' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement('div', { className: 'icon' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'title' },
+								_react2.default.createElement(
+									'div',
+									null,
+									_react2.default.createElement(
+										'span',
+										null,
+										'LUAU 2016'
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									null,
+									_react2.default.createElement(
+										'h2',
+										null,
+										'Cornhole Tournament'
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'entry' },
+								_react2.default.createElement(
+									'div',
+									null,
+									_react2.default.createElement(
+										'span',
+										null,
+										'USE APP AS'
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									null,
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: '/bracket/' },
+										_react2.default.createElement(
+											'button',
+											{ className: 'primary-btn background-color-3' },
+											'COMPETITOR'
+										)
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									null,
+									_react2.default.createElement(
+										'button',
+										{ className: 'secondary-btn no-background', onClick: this.handleModeratorLogin },
+										'MODERATOR'
+									)
+								)
+							)
+						)
+					);
+				}
+				return _react2.default.createElement(
+					'div',
+					{ id: 'Home', className: 'background-color-1' },
+					login
 				);
 			}
 		}]);
@@ -26891,263 +26967,45 @@
 		value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _fluxReact = __webpack_require__(238);
 	
-	var _react = __webpack_require__(1);
+	var _fluxReact2 = _interopRequireDefault(_fluxReact);
 	
-	var _react2 = _interopRequireDefault(_react);
+	var _sessionstorage = __webpack_require__(243);
 	
-	var _TeamStore = __webpack_require__(238);
-	
-	var _TeamStore2 = _interopRequireDefault(_TeamStore);
-	
-	var _TeamActions = __webpack_require__(244);
-	
-	var _TeamActions2 = _interopRequireDefault(_TeamActions);
-	
-	var _AddTeam = __webpack_require__(269);
-	
-	var _AddTeam2 = _interopRequireDefault(_AddTeam);
-	
-	var _TopMenu = __webpack_require__(270);
-	
-	var _TopMenu2 = _interopRequireDefault(_TopMenu);
-	
-	var _constants = __webpack_require__(268);
+	var _sessionstorage2 = _interopRequireDefault(_sessionstorage);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TeamEvents = _constants.Events.TeamEvents;
-	
-	var Admin = function (_React$Component) {
-		_inherits(Admin, _React$Component);
-	
-		function Admin(props) {
-			_classCallCheck(this, Admin);
-	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Admin).call(this, props));
-	
-			_this.handleClick = _this.handleClick.bind(_this);
-			_this.updateState = _this.updateState.bind(_this);
-			_this.state = {
-				teams: _TeamStore2.default.getTeams(),
-				showAdd: false
-			};
-			return _this;
+	var LoginStore = _fluxReact2.default.createStore({
+		exports: {
+			status: function status() {
+				var isLoggedIn = _sessionstorage2.default.getItem("IsLoggedIn");
+				return isLoggedIn == "true" ? true : false;
+			},
+			logIn: function logIn(password) {
+				if (password == 'cornholio') {
+					_sessionstorage2.default.setItem("IsLoggedIn", "true");
+					return true;
+				} else {
+					_sessionstorage2.default.setItem("IsLoggedIn", "false");
+					return false;
+				}
+			}
 		}
+	});
 	
-		_createClass(Admin, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
-				_TeamStore2.default.fetchTeams();
-				_TeamStore2.default.on(TeamEvents.LOADED, this.updateState);
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				_TeamStore2.default.off(TeamEvents.LOADED, this.updateState);
-			}
-		}, {
-			key: 'handleClick',
-			value: function handleClick(e) {
-				var cur = this.state.showAdd;
-				this.setState({
-					showAdd: !cur
-				});
-			}
-		}, {
-			key: 'handleGenerateClick',
-			value: function handleGenerateClick(e) {
-				_TeamActions2.default.generateBracket();
-			}
-		}, {
-			key: 'updateState',
-			value: function updateState() {
-				this.setState({
-					teams: _TeamStore2.default.getTeams(),
-					showAdd: false
-				});
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var teams = _react2.default.createElement(
-					'ul',
-					null,
-					_react2.default.createElement(
-						'li',
-						null,
-						'No Teams'
-					)
-				);
-				var addTeam = '';
-				if (this.state.showAdd) {
-					addTeam = _react2.default.createElement(_AddTeam2.default, null);
-				}
-				if (this.state.teams && this.state.teams.length > 1) {
-					teams = _react2.default.createElement(
-						'div',
-						{ className: 'teams' },
-						this.state.teams.map(function (team) {
-							return _react2.default.createElement(
-								'div',
-								{ key: team.teamId, className: 'pure-g' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'pure-u-1-2 relative' },
-									_react2.default.createElement(
-										'span',
-										{ className: 'vertical-align absolute' },
-										team.teamName
-									)
-								),
-								_react2.default.createElement(
-									'div',
-									{ className: 'pure-u-1-2 relative' },
-									_react2.default.createElement(
-										'ul',
-										null,
-										_react2.default.createElement(
-											'li',
-											null,
-											team.players[0]
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											team.players[1]
-										)
-									)
-								)
-							);
-						})
-					);
-				}
-				return _react2.default.createElement(
-					'div',
-					{ id: 'Admin' },
-					_react2.default.createElement(_TopMenu2.default, null),
-					_react2.default.createElement(
-						'div',
-						{ className: 'container pure-g' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'pure-u-1' },
-							_react2.default.createElement(
-								'h3',
-								null,
-								'Teams'
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'pure-u-1' },
-							_react2.default.createElement(
-								'button',
-								{ onClick: this.handleClick, className: 'background-color-3' },
-								'Add'
-							),
-							addTeam
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'pure-u-1' },
-							teams
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'pure-u-1' },
-							_react2.default.createElement(
-								'button',
-								{ onClick: this.handleGenerateClick, className: 'background-color-3' },
-								'Add'
-							)
-						)
-					)
-				);
-			}
-		}]);
-	
-		return Admin;
-	}(_react2.default.Component);
-	
-	;
-	
-	exports.default = Admin;
+	exports.default = LoginStore;
 
 /***/ },
 /* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _fluxReact = __webpack_require__(239);
-	
-	var _fluxReact2 = _interopRequireDefault(_fluxReact);
-	
-	var _TeamActions = __webpack_require__(244);
-	
-	var _TeamActions2 = _interopRequireDefault(_TeamActions);
-	
-	var _ApiUtil = __webpack_require__(245);
-	
-	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
-	
-	var _constants = __webpack_require__(268);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var TeamEvents = _constants.Events.TeamEvents;
-	
-	var TeamStore = _fluxReact2.default.createStore({
-		teamsCache: [],
-		actions: [_TeamActions2.default.addTeam,
-		//actions.addTeamFail,
-		_TeamActions2.default.updateTeamSuccess,
-		//actions.updateTeamFail,
-		_TeamActions2.default.getTeamsSuccess],
-		addTeam: function addTeam(teamId, teamName, teamMembers) {
-			_ApiUtil2.default.saveTeam({ teamId: teamId, teamName: teamName, players: teamMembers });
-		},
-		updateTeamSuccess: function updateTeamSuccess() {
-			_ApiUtil2.default.loadTeams();
-		},
-		getTeamsSuccess: function getTeamsSuccess(teams) {
-			this.teamsCache = teams.data;
-			this.emit(TeamEvents.LOADED);
-		},
-	
-		exports: {
-			fetchTeams: function fetchTeams() {
-				_ApiUtil2.default.loadTeams();
-			},
-			getTeams: function getTeams() {
-				return this.teamsCache;
-			}
-		}
-	});
-	
-	exports.default = TeamStore;
-
-/***/ },
-/* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function(global) {var React = global.React || __webpack_require__(1);
-	var action = __webpack_require__(240);
-	var EventEmitter = __webpack_require__(241).EventEmitter2 || __webpack_require__(241);
-	var safeDeepClone = __webpack_require__(242);
-	var RenderMixin = __webpack_require__(243);
+	var action = __webpack_require__(239);
+	var EventEmitter = __webpack_require__(240).EventEmitter2 || __webpack_require__(240);
+	var safeDeepClone = __webpack_require__(241);
+	var RenderMixin = __webpack_require__(242);
 	
 	var flux = {};
 	
@@ -27256,7 +27114,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 240 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -27267,8 +27125,8 @@
 	 * ====================================================================================
 	 */
 	
-	var EventEmitter = __webpack_require__(241).EventEmitter2 || __webpack_require__(241);
-	var safeDeepClone = __webpack_require__(242);
+	var EventEmitter = __webpack_require__(240).EventEmitter2 || __webpack_require__(240);
+	var safeDeepClone = __webpack_require__(241);
 	
 	var createActionFunction = function (actionName) {
 	
@@ -27325,7 +27183,7 @@
 
 
 /***/ },
-/* 241 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -27904,7 +27762,7 @@
 
 
 /***/ },
-/* 242 */
+/* 241 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {function safeDeepClone(circularValue, refs, obj) {
@@ -27970,7 +27828,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 243 */
+/* 242 */
 /***/ function(module, exports) {
 
 	var isObject = function (obj) {
@@ -28011,7 +27869,410 @@
 
 
 /***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = (function store() {
+	  'use strict';
+	
+	  function nope() { /* Fallback for when no store is supported */ }
+	
+	  try {
+	    sessionStorage.setItem('foo', 'bar');
+	    if (sessionStorage.getItem('foo') !== 'bar') throw 1;
+	  } catch (e) {
+	    var storage = __webpack_require__(244)
+	      , koekje = __webpack_require__(246);
+	
+	    return storage.supported ? storage : (koekje.supported ? koekje : {
+	      length: 0,
+	      getItem: nope, setItem: nope, removeItem: nope, clear: nope
+	    });
+	  }
+	
+	  return sessionStorage;
+	}());
+
+
+/***/ },
 /* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var has = Object.prototype.hasOwnProperty
+	  , qs = __webpack_require__(245)
+	  , storage = {}
+	  , prefix = '§';
+	
+	/**
+	 * Refresh the storage as other users might also be writing against it.
+	 *
+	 * @api private
+	 */
+	function update() {
+	  if (!windowStorage.supported) return;
+	
+	  var data = window.name
+	    , length = 0
+	    , key;
+	
+	  storage = data.charAt(0) === prefix
+	    ? qs.parse(data.slice(1))
+	    : {};
+	
+	  for (key in storage) {
+	    if (has.call(storage, key)) length++;
+	  }
+	
+	  windowStorage.length = length;
+	}
+	
+	/**
+	 * A DOM storage wrapper which abuses the window.name property to temporarily
+	 * store values in the browser.
+	 *
+	 * @type {Object}
+	 * @public
+	 */
+	var windowStorage = module.exports = {
+	  /**
+	   * The total number items stored in the storage.
+	   *
+	   * @type {Number}
+	   * @public
+	   */
+	  length: 0,
+	
+	  /**
+	   * Find an item in the storage.
+	   *
+	   * @param {String} key Name of the value we lookup.
+	   * @returns {String|Null} Found item or null.
+	   * @api public
+	   */
+	  getItem: function getItem(key) {
+	    if (has.call(storage, key)) return storage[key];
+	    return null;
+	  },
+	
+	  /**
+	   * Add a new item in the storage.
+	   *
+	   * @param {String} key Name under which we store the value.
+	   * @param {String} value Value for the key.
+	   * @returns {Undefined}
+	   * @api public
+	   */
+	  setItem: function setItem(key, value) {
+	    storage[key] = value;
+	    window.name = qs.stringify(storage, prefix);
+	
+	    windowStorage.length++;
+	  },
+	
+	  /**
+	   * Remove a single item from the storage.
+	   *
+	   * @param {String} key Name of the value we need to remove.
+	   * @returns {Undefined}
+	   * @api pubilc
+	   */
+	  removeItem: function removeItem(key) {
+	    delete storage[key];
+	    window.name = qs.stringify(storage, prefix);
+	
+	    windowStorage.length--;
+	  },
+	
+	  /**
+	   * Completely remove all items from the store.
+	   *
+	   * @returns {Undefined}
+	   * @api pubilc
+	   */
+	  clear: function clear() {
+	    storage = {};
+	    window.name = '';
+	    windowStorage.length = 0;
+	  },
+	
+	  /**
+	   * Is this storage system supported in the current environment.
+	   *
+	   * @type {Boolean}
+	   * @public
+	   */
+	  supported: (function supported() {
+	    return 'object' === typeof window && 'string' === typeof window.name;
+	  }())
+	};
+	
+	//
+	// Make sure that we initialize the storage so it pre-fills the `.length`
+	//
+	update();
+
+
+/***/ },
+/* 245 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var has = Object.prototype.hasOwnProperty;
+	
+	/**
+	 * Simple query string parser.
+	 *
+	 * @param {String} query The query string that needs to be parsed.
+	 * @returns {Object}
+	 * @api public
+	 */
+	function querystring(query) {
+	  var parser = /([^=?&]+)=([^&]*)/g
+	    , result = {}
+	    , part;
+	
+	  //
+	  // Little nifty parsing hack, leverage the fact that RegExp.exec increments
+	  // the lastIndex property so we can continue executing this loop until we've
+	  // parsed all results.
+	  //
+	  for (;
+	    part = parser.exec(query);
+	    result[decodeURIComponent(part[1])] = decodeURIComponent(part[2])
+	  );
+	
+	  return result;
+	}
+	
+	/**
+	 * Transform a query string to an object.
+	 *
+	 * @param {Object} obj Object that should be transformed.
+	 * @param {String} prefix Optional prefix.
+	 * @returns {String}
+	 * @api public
+	 */
+	function querystringify(obj, prefix) {
+	  prefix = prefix || '';
+	
+	  var pairs = [];
+	
+	  //
+	  // Optionally prefix with a '?' if needed
+	  //
+	  if ('string' !== typeof prefix) prefix = '?';
+	
+	  for (var key in obj) {
+	    if (has.call(obj, key)) {
+	      pairs.push(encodeURIComponent(key) +'='+ encodeURIComponent(obj[key]));
+	    }
+	  }
+	
+	  return pairs.length ? prefix + pairs.join('&') : '';
+	}
+	
+	//
+	// Expose the module.
+	//
+	exports.stringify = querystringify;
+	exports.parse = querystring;
+
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var has = Object.prototype.hasOwnProperty
+	  , monster = __webpack_require__(247)
+	  , qs = __webpack_require__(245)
+	  , storage = {}
+	  , prefix = '§'
+	  , cookie;
+	
+	//
+	// The export interface of the cookie-monster module is quite odd, if there is
+	// no `document` in global it will simply not export the `get` and `set`
+	// methods. Causing this module to fail on `undefined` function calls. Default
+	// to an empty object when document doesn't exists solves it.
+	//
+	cookie = monster('undefined' !== typeof document ? document : {});
+	
+	/**
+	 * Refresh the storage as other users might also be writing against it.
+	 *
+	 * @api private
+	 */
+	function update() {
+	  if (!koekje.supported) return;
+	
+	  var data = cookie.get('koekje')
+	    , length = 0
+	    , key;
+	
+	  storage = data && data.charAt(0) === prefix
+	    ? qs.parse(data.slice(1))
+	    : {};
+	
+	  for (key in storage) {
+	    if (has.call(storage, key)) length++;
+	  }
+	
+	  koekje.length = length;
+	}
+	
+	var koekje = module.exports = {
+	  /**
+	   * The total number items stored in the storage.
+	   *
+	   * @type {Number}
+	   * @public
+	   */
+	  length: 0,
+	
+	  /**
+	   * Find an item in the storage.
+	   *
+	   * @param {String} key Name of the value we lookup.
+	   * @returns {String|Null} Found item or null.
+	   * @api public
+	   */
+	  getItem: function getItem(key) {
+	    if (has.call(storage, key)) return storage[key];
+	    return null;
+	  },
+	
+	  /**
+	   * Add a new item in the storage.
+	   *
+	   * @param {String} key Name under which we store the value.
+	   * @param {String} value Value for the key.
+	   * @returns {Undefined}
+	   * @api public
+	   */
+	  setItem: function setItem(key, value) {
+	    storage[key] = value;
+	    cookie.set('koekje', qs.stringify(storage, prefix));
+	
+	    koekje.length++;
+	  },
+	
+	  /**
+	   * Remove a single item from the storage.
+	   *
+	   * @param {String} key Name of the value we need to remove.
+	   * @returns {Undefined}
+	   * @api pubilc
+	   */
+	  removeItem: function removeItem(key) {
+	    delete storage[key];
+	    cookie.set('koekje', qs.stringify(storage, prefix));
+	
+	    koekje.length--;
+	  },
+	
+	  /**
+	   * Completely remove all items from the store.
+	   *
+	   * @returns {Undefined}
+	   * @api pubilc
+	   */
+	  clear: function clear() {
+	    storage = {};
+	
+	    cookie.set('koekje', '', {
+	      expires: new Date(0)
+	    });
+	
+	    koekje.length = 0;
+	  },
+	
+	  /**
+	   * Is this storage system supported in the current environment.
+	   *
+	   * @type {Boolean}
+	   * @public
+	   */
+	  supported: (function supported() {
+	    return 'object' === typeof navigator && navigator.cookieEnabled;
+	  }()),
+	
+	  /**
+	   * Completely re-initiate the storage.
+	   *
+	   * @type {Function}
+	   * @api private
+	   */
+	  update: update
+	};
+	
+	//
+	// Make sure that we initialize the storage so it pre-fills the `.length`
+	//
+	update();
+
+
+/***/ },
+/* 247 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports = module.exports = function (doc) {
+	  if (!doc) doc = {};
+	  if (typeof doc === 'string') doc = { cookie: doc };
+	  if (doc.cookie === undefined) doc.cookie = '';
+	
+	  var self = {};
+	  self.get = function (key) {
+	    var cookiesSplat = doc.cookie.split(/;\s*/);
+	    for (var i = 0; i < cookiesSplat.length; i++) {
+	      var ps = cookiesSplat[i].split('=');
+	      var k = decodeURIComponent(ps[0]);
+	      if (k === key) return decodeURIComponent(ps[1]);
+	    }
+	  };
+	
+	  self.set = function (key, value, opts) {
+	    if (!opts) opts = {};
+	    var newCookie = encodeURIComponent(key) + '=' + encodeURIComponent(value);
+	
+	    if (opts.hasOwnProperty('expires')){
+	      newCookie += '; expires=' + opts.expires;
+	    }
+	
+	    if (opts.hasOwnProperty('path')) {
+	      newCookie += '; path=' + opts.path;
+	    }
+	
+	    if (opts.hasOwnProperty('domain')) {
+	      newCookie += '; domain=' + opts.domain;
+	    }
+	
+	    if (opts.hasOwnProperty('secure')) {
+	      newCookie += '; secure';
+	    }
+	
+	    doc.cookie = newCookie;
+	
+	    return newCookie;
+	  };
+	  return self;
+	};
+	
+	if (typeof document !== 'undefined') {
+	  var cookie = exports(document);
+	  exports.get = cookie.get;
+	  exports.set = cookie.set;
+	}
+
+
+/***/ },
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28020,7 +28281,265 @@
 		value: true
 	});
 	
-	var _fluxReact = __webpack_require__(239);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _TeamStore = __webpack_require__(249);
+	
+	var _TeamStore2 = _interopRequireDefault(_TeamStore);
+	
+	var _TeamActions = __webpack_require__(250);
+	
+	var _TeamActions2 = _interopRequireDefault(_TeamActions);
+	
+	var _AddTeam = __webpack_require__(275);
+	
+	var _AddTeam2 = _interopRequireDefault(_AddTeam);
+	
+	var _TopMenu = __webpack_require__(276);
+	
+	var _TopMenu2 = _interopRequireDefault(_TopMenu);
+	
+	var _constants = __webpack_require__(274);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TeamEvents = _constants.Events.TeamEvents;
+	
+	var Admin = function (_React$Component) {
+		_inherits(Admin, _React$Component);
+	
+		function Admin(props) {
+			_classCallCheck(this, Admin);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Admin).call(this, props));
+	
+			_this.handleClick = _this.handleClick.bind(_this);
+			_this.updateState = _this.updateState.bind(_this);
+			_this.state = {
+				teams: _TeamStore2.default.getTeams(),
+				showAdd: false
+			};
+			return _this;
+		}
+	
+		_createClass(Admin, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_TeamStore2.default.fetchTeams();
+				_TeamStore2.default.on(TeamEvents.LOADED, this.updateState);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_TeamStore2.default.off(TeamEvents.LOADED, this.updateState);
+			}
+		}, {
+			key: 'handleClick',
+			value: function handleClick(e) {
+				var cur = this.state.showAdd;
+				this.setState({
+					showAdd: !cur
+				});
+			}
+		}, {
+			key: 'handleGenerateClick',
+			value: function handleGenerateClick(e) {
+				_TeamActions2.default.generateBracket();
+			}
+		}, {
+			key: 'updateState',
+			value: function updateState() {
+				this.setState({
+					teams: _TeamStore2.default.getTeams(),
+					showAdd: false
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var teams = _react2.default.createElement(
+					'ul',
+					null,
+					_react2.default.createElement(
+						'li',
+						null,
+						'No Teams'
+					)
+				);
+				var addTeam = '';
+				if (this.state.showAdd) {
+					addTeam = _react2.default.createElement(_AddTeam2.default, null);
+				}
+				if (this.state.teams && this.state.teams.length > 1) {
+					teams = _react2.default.createElement(
+						'div',
+						{ className: 'teams' },
+						this.state.teams.map(function (team) {
+							return _react2.default.createElement(
+								'div',
+								{ key: team.teamId, className: 'pure-g' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'pure-u-1-2 relative' },
+									_react2.default.createElement(
+										'span',
+										{ className: 'vertical-align absolute' },
+										team.teamName
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'pure-u-1-2 relative' },
+									_react2.default.createElement(
+										'ul',
+										null,
+										_react2.default.createElement(
+											'li',
+											null,
+											team.players[0]
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											team.players[1]
+										)
+									)
+								)
+							);
+						})
+					);
+				}
+				return _react2.default.createElement(
+					'div',
+					{ id: 'Admin' },
+					_react2.default.createElement(_TopMenu2.default, null),
+					_react2.default.createElement(
+						'div',
+						{ className: 'container pure-g' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement(
+								'h3',
+								null,
+								'Teams'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement(
+								'button',
+								{ onClick: this.handleClick, className: 'background-color-3' },
+								'Add'
+							),
+							addTeam
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							teams
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement(
+								'button',
+								{ onClick: this.handleGenerateClick, className: 'background-color-3' },
+								'Generate Bracket'
+							)
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Admin;
+	}(_react2.default.Component);
+	
+	;
+	
+	exports.default = Admin;
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _fluxReact = __webpack_require__(238);
+	
+	var _fluxReact2 = _interopRequireDefault(_fluxReact);
+	
+	var _TeamActions = __webpack_require__(250);
+	
+	var _TeamActions2 = _interopRequireDefault(_TeamActions);
+	
+	var _ApiUtil = __webpack_require__(251);
+	
+	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
+	
+	var _constants = __webpack_require__(274);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var TeamEvents = _constants.Events.TeamEvents;
+	
+	var TeamStore = _fluxReact2.default.createStore({
+		teamsCache: [],
+		actions: [_TeamActions2.default.addTeam,
+		//actions.addTeamFail,
+		_TeamActions2.default.updateTeamSuccess,
+		//actions.updateTeamFail,
+		_TeamActions2.default.getTeamsSuccess],
+		addTeam: function addTeam(teamId, teamName, teamMembers) {
+			_ApiUtil2.default.saveTeam({ teamId: teamId, teamName: teamName, players: teamMembers });
+		},
+		updateTeamSuccess: function updateTeamSuccess() {
+			_ApiUtil2.default.loadTeams();
+		},
+		getTeamsSuccess: function getTeamsSuccess(teams) {
+			this.teamsCache = teams.data;
+			this.emit(TeamEvents.LOADED);
+		},
+	
+		exports: {
+			fetchTeams: function fetchTeams() {
+				_ApiUtil2.default.loadTeams();
+			},
+			getTeams: function getTeams() {
+				return this.teamsCache;
+			}
+		}
+	});
+	
+	exports.default = TeamStore;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _fluxReact = __webpack_require__(238);
 	
 	var _fluxReact2 = _interopRequireDefault(_fluxReact);
 	
@@ -28031,7 +28550,7 @@
 	exports.default = TeamActions;
 
 /***/ },
-/* 245 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28040,19 +28559,19 @@
 		value: true
 	});
 	
-	var _xhr = __webpack_require__(246);
+	var _xhr = __webpack_require__(252);
 	
 	var _xhr2 = _interopRequireDefault(_xhr);
 	
-	var _TeamActions = __webpack_require__(244);
+	var _TeamActions = __webpack_require__(250);
 	
 	var _TeamActions2 = _interopRequireDefault(_TeamActions);
 	
-	var _BracketActions = __webpack_require__(266);
+	var _BracketActions = __webpack_require__(272);
 	
 	var _BracketActions2 = _interopRequireDefault(_BracketActions);
 	
-	var _GameActions = __webpack_require__(267);
+	var _GameActions = __webpack_require__(273);
 	
 	var _GameActions2 = _interopRequireDefault(_GameActions);
 	
@@ -28101,12 +28620,12 @@
 	exports.default = ApiUtils;
 
 /***/ },
-/* 246 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _axios = __webpack_require__(247);
+	var _axios = __webpack_require__(253);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -28129,25 +28648,25 @@
 	};
 
 /***/ },
-/* 247 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(248);
+	module.exports = __webpack_require__(254);
 
 /***/ },
-/* 248 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var defaults = __webpack_require__(249);
-	var utils = __webpack_require__(250);
-	var dispatchRequest = __webpack_require__(252);
-	var InterceptorManager = __webpack_require__(261);
-	var isAbsoluteURL = __webpack_require__(262);
-	var combineURLs = __webpack_require__(263);
-	var bind = __webpack_require__(264);
-	var transformData = __webpack_require__(256);
+	var defaults = __webpack_require__(255);
+	var utils = __webpack_require__(256);
+	var dispatchRequest = __webpack_require__(258);
+	var InterceptorManager = __webpack_require__(267);
+	var isAbsoluteURL = __webpack_require__(268);
+	var combineURLs = __webpack_require__(269);
+	var bind = __webpack_require__(270);
+	var transformData = __webpack_require__(262);
 	
 	function Axios(defaultConfig) {
 	  this.defaults = utils.merge({}, defaultConfig);
@@ -28236,7 +28755,7 @@
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(265);
+	axios.spread = __webpack_require__(271);
 	
 	// Provide aliases for supported request methods
 	utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
@@ -28264,13 +28783,13 @@
 
 
 /***/ },
-/* 249 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(250);
-	var normalizeHeaderName = __webpack_require__(251);
+	var utils = __webpack_require__(256);
+	var normalizeHeaderName = __webpack_require__(257);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -28342,7 +28861,7 @@
 
 
 /***/ },
-/* 250 */
+/* 256 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28625,12 +29144,12 @@
 
 
 /***/ },
-/* 251 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(250);
+	var utils = __webpack_require__(256);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -28643,7 +29162,7 @@
 
 
 /***/ },
-/* 252 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -28665,10 +29184,10 @@
 	        adapter = config.adapter;
 	      } else if (typeof XMLHttpRequest !== 'undefined') {
 	        // For browsers use XHR adapter
-	        adapter = __webpack_require__(253);
+	        adapter = __webpack_require__(259);
 	      } else if (typeof process !== 'undefined') {
 	        // For node use HTTP adapter
-	        adapter = __webpack_require__(253);
+	        adapter = __webpack_require__(259);
 	      }
 	
 	      if (typeof adapter === 'function') {
@@ -28684,18 +29203,18 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 253 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(250);
-	var buildURL = __webpack_require__(254);
-	var parseHeaders = __webpack_require__(255);
-	var transformData = __webpack_require__(256);
-	var isURLSameOrigin = __webpack_require__(257);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(258);
-	var settle = __webpack_require__(259);
+	var utils = __webpack_require__(256);
+	var buildURL = __webpack_require__(260);
+	var parseHeaders = __webpack_require__(261);
+	var transformData = __webpack_require__(262);
+	var isURLSameOrigin = __webpack_require__(263);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(264);
+	var settle = __webpack_require__(265);
 	
 	module.exports = function xhrAdapter(resolve, reject, config) {
 	  var requestData = config.data;
@@ -28792,7 +29311,7 @@
 	  // This is only done if running in a standard browser environment.
 	  // Specifically not if we're in a web worker, or react-native.
 	  if (utils.isStandardBrowserEnv()) {
-	    var cookies = __webpack_require__(260);
+	    var cookies = __webpack_require__(266);
 	
 	    // Add xsrf header
 	    var xsrfValue = config.withCredentials || isURLSameOrigin(config.url) ?
@@ -28853,12 +29372,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 254 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(250);
+	var utils = __webpack_require__(256);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -28927,12 +29446,12 @@
 
 
 /***/ },
-/* 255 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(250);
+	var utils = __webpack_require__(256);
 	
 	/**
 	 * Parse headers into an object
@@ -28970,12 +29489,12 @@
 
 
 /***/ },
-/* 256 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(250);
+	var utils = __webpack_require__(256);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -28996,12 +29515,12 @@
 
 
 /***/ },
-/* 257 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(250);
+	var utils = __webpack_require__(256);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -29070,7 +29589,7 @@
 
 
 /***/ },
-/* 258 */
+/* 264 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29112,7 +29631,7 @@
 
 
 /***/ },
-/* 259 */
+/* 265 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29136,12 +29655,12 @@
 
 
 /***/ },
-/* 260 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(250);
+	var utils = __webpack_require__(256);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -29195,12 +29714,12 @@
 
 
 /***/ },
-/* 261 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(250);
+	var utils = __webpack_require__(256);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -29253,7 +29772,7 @@
 
 
 /***/ },
-/* 262 */
+/* 268 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29273,7 +29792,7 @@
 
 
 /***/ },
-/* 263 */
+/* 269 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29291,7 +29810,7 @@
 
 
 /***/ },
-/* 264 */
+/* 270 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29308,7 +29827,7 @@
 
 
 /***/ },
-/* 265 */
+/* 271 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29341,7 +29860,7 @@
 
 
 /***/ },
-/* 266 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29350,7 +29869,7 @@
 		value: true
 	});
 	
-	var _fluxReact = __webpack_require__(239);
+	var _fluxReact = __webpack_require__(238);
 	
 	var _fluxReact2 = _interopRequireDefault(_fluxReact);
 	
@@ -29361,7 +29880,7 @@
 	exports.default = BracketActions;
 
 /***/ },
-/* 267 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29370,7 +29889,7 @@
 		value: true
 	});
 	
-	var _fluxReact = __webpack_require__(239);
+	var _fluxReact = __webpack_require__(238);
 	
 	var _fluxReact2 = _interopRequireDefault(_fluxReact);
 	
@@ -29381,7 +29900,7 @@
 	exports.default = GameActions;
 
 /***/ },
-/* 268 */
+/* 274 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29402,7 +29921,7 @@
 	};
 
 /***/ },
-/* 269 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29417,11 +29936,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TeamStore = __webpack_require__(238);
+	var _TeamStore = __webpack_require__(249);
 	
 	var _TeamStore2 = _interopRequireDefault(_TeamStore);
 	
-	var _TeamActions = __webpack_require__(244);
+	var _TeamActions = __webpack_require__(250);
 	
 	var _TeamActions2 = _interopRequireDefault(_TeamActions);
 	
@@ -29543,10 +30062,10 @@
 	exports.default = AddTeam;
 
 /***/ },
-/* 270 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29557,6 +30076,8 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(33);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29576,20 +30097,19 @@
 		}
 	
 		_createClass(TopMenu, [{
-			key: "render",
+			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					"div",
-					{ id: "TopMenu", className: "pure-g background-color-1" },
+					'div',
+					{ id: 'TopMenu', className: 'pure-g background-color-1' },
 					_react2.default.createElement(
-						"div",
-						{ className: "pure-u-4-5" },
-						_react2.default.createElement("div", { className: "logo" })
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "pure-u-1-5" },
-						_react2.default.createElement("span", { className: "icon icon-hamburger" })
+						'div',
+						{ className: 'pure-u-1' },
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ to: '/bracket/' },
+							_react2.default.createElement('div', { className: 'logo' })
+						)
 					)
 				);
 			}
@@ -29601,7 +30121,7 @@
 	exports.default = TopMenu;
 
 /***/ },
-/* 271 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29618,15 +30138,15 @@
 	
 	var _reactRouter = __webpack_require__(33);
 	
-	var _BracketStore = __webpack_require__(272);
+	var _BracketStore = __webpack_require__(278);
 	
 	var _BracketStore2 = _interopRequireDefault(_BracketStore);
 	
-	var _TopMenu = __webpack_require__(270);
+	var _TopMenu = __webpack_require__(276);
 	
 	var _TopMenu2 = _interopRequireDefault(_TopMenu);
 	
-	var _constants = __webpack_require__(268);
+	var _constants = __webpack_require__(274);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29751,7 +30271,7 @@
 	exports.default = Bracket;
 
 /***/ },
-/* 272 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29760,19 +30280,19 @@
 		value: true
 	});
 	
-	var _fluxReact = __webpack_require__(239);
+	var _fluxReact = __webpack_require__(238);
 	
 	var _fluxReact2 = _interopRequireDefault(_fluxReact);
 	
-	var _BracketActions = __webpack_require__(266);
+	var _BracketActions = __webpack_require__(272);
 	
 	var _BracketActions2 = _interopRequireDefault(_BracketActions);
 	
-	var _ApiUtil = __webpack_require__(245);
+	var _ApiUtil = __webpack_require__(251);
 	
 	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
 	
-	var _constants = __webpack_require__(268);
+	var _constants = __webpack_require__(274);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29811,7 +30331,7 @@
 	exports.default = BracketStore;
 
 /***/ },
-/* 273 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29826,19 +30346,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _GameStore = __webpack_require__(274);
+	var _GameStore = __webpack_require__(280);
 	
 	var _GameStore2 = _interopRequireDefault(_GameStore);
 	
-	var _TopMenu = __webpack_require__(270);
+	var _LoginStore = __webpack_require__(237);
+	
+	var _LoginStore2 = _interopRequireDefault(_LoginStore);
+	
+	var _TopMenu = __webpack_require__(276);
 	
 	var _TopMenu2 = _interopRequireDefault(_TopMenu);
 	
-	var _TeamMatch = __webpack_require__(275);
+	var _TeamMatch = __webpack_require__(281);
 	
 	var _TeamMatch2 = _interopRequireDefault(_TeamMatch);
 	
-	var _constants = __webpack_require__(268);
+	var _constants = __webpack_require__(274);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29860,7 +30384,8 @@
 	
 			_this.state = {
 				gameId: props.params.gameId,
-				game: _GameStore2.default.getGame(props.params.gameId)
+				game: _GameStore2.default.getGame(props.params.gameId),
+				isLoggedIn: _LoginStore2.default.status()
 			};
 			_this.updateState = _this.updateState.bind(_this);
 			_this.handleTeam1ScoreChange = _this.handleTeam1ScoreChange.bind(_this);
@@ -29915,6 +30440,7 @@
 				var team2name = "Team 2";
 				var team1score = 0;
 				var team2score = 0;
+				var buttons = "";
 				if (this.state.game && this.state.game.team1) {
 					team1name = this.state.game.team1.teamName;
 				}
@@ -29925,12 +30451,25 @@
 					team1score = this.state.game.team1Score ? this.state.game.team1Score : 0;
 					team2score = this.state.game.team2Score ? this.state.game.team2Score : 0;
 				}
-	
-				var buttons = _react2.default.createElement(
-					'h3',
-					null,
-					' Buttons go here '
-				);
+				if (this.state.isLoggedIn) {
+					buttons = _react2.default.createElement(
+						'div',
+						{ className: 'buttons background-color-1 pure-u-1' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-g' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'pure-u-1' },
+								_react2.default.createElement(
+									'button',
+									{ className: 'no-background', onClick: this.handleGameSubmit },
+									'SUBMIT GAME'
+								)
+							)
+						)
+					);
+				}
 				return _react2.default.createElement(
 					'div',
 					{ id: 'Game' },
@@ -29948,32 +30487,7 @@
 							{ className: 'team2 pure-u-1' },
 							_react2.default.createElement(_TeamMatch2.default, { team: team2name, score: team2score, teamScoreChange: this.handleTeam2ScoreChange })
 						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'buttons background-color-1 pure-u-1' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'pure-g' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'pure-u-1' },
-									_react2.default.createElement(
-										'button',
-										{ className: 'no-background', onClick: this.handleGameSubmit },
-										'SUBMIT GAME'
-									)
-								),
-								_react2.default.createElement(
-									'div',
-									{ className: 'pure-u-1' },
-									_react2.default.createElement(
-										'span',
-										null,
-										'FORFEIT GAME'
-									)
-								)
-							)
-						)
+						buttons
 					)
 				);
 			}
@@ -29985,7 +30499,7 @@
 	exports.default = Game;
 
 /***/ },
-/* 274 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29994,19 +30508,19 @@
 		value: true
 	});
 	
-	var _fluxReact = __webpack_require__(239);
+	var _fluxReact = __webpack_require__(238);
 	
 	var _fluxReact2 = _interopRequireDefault(_fluxReact);
 	
-	var _GameActions = __webpack_require__(267);
+	var _GameActions = __webpack_require__(273);
 	
 	var _GameActions2 = _interopRequireDefault(_GameActions);
 	
-	var _ApiUtil = __webpack_require__(245);
+	var _ApiUtil = __webpack_require__(251);
 	
 	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
 	
-	var _constants = __webpack_require__(268);
+	var _constants = __webpack_require__(274);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30046,7 +30560,7 @@
 	exports.default = GameStore;
 
 /***/ },
-/* 275 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30061,7 +30575,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _GameStore = __webpack_require__(274);
+	var _GameStore = __webpack_require__(280);
 	
 	var _GameStore2 = _interopRequireDefault(_GameStore);
 	
@@ -30087,6 +30601,7 @@
 			};
 			_this.handleScorePlus = _this.handleScorePlus.bind(_this);
 			_this.handleScoreMinus = _this.handleScoreMinus.bind(_this);
+			_this.handleScoreSpecial = _this.handleScoreSpecial.bind(_this);
 			_this.handleScore = props.teamScoreChange;
 			return _this;
 		}
@@ -30108,6 +30623,11 @@
 			key: 'handleScoreMinus',
 			value: function handleScoreMinus() {
 				this.handleScore(-1);
+			}
+		}, {
+			key: 'handleScoreSpecial',
+			value: function handleScoreSpecial() {
+				this.handleScore(3);
 			}
 		}, {
 			key: 'render',
@@ -30156,7 +30676,7 @@
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'bullseye background-color-4 pure-u-1' },
+						{ className: 'bullseye background-color-4 pure-u-1', onClick: this.handleScoreSpecial },
 						_react2.default.createElement(
 							'h3',
 							null,
