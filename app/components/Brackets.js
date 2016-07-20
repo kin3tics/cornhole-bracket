@@ -2,6 +2,7 @@ import React from 'react';
 import TopMenu from './TopMenu';
 import Bracket from './Bracket';
 import _ from 'lodash';
+import $ from 'jquery';
 import domUtil from '../utils/domUtil';
 
 
@@ -39,11 +40,16 @@ var destroyMobileBracket = function(el){
 };
 
 class Brackets extends React.Component {
-	componentWillMount() {
-		domUtil.customResizeBind();
-	}
 
+	constructor() {
+	  super();
+	  this.state= {
+    		inBrowser: false
+    	}
+  	}
 	componentDidMount() {
+		this.setState({inBrowser: true});
+		domUtil.customResizeBind();
 		$(document).on( 'luau:resize', function(){
 			var $el = $('.bracket-container').find('.bracket');
 			if ($(window).width() < 551) {

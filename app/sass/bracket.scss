@@ -2,7 +2,11 @@ $bracket-headers: #353432;
 $bracket-headers-active: #696764;
 $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 
-
+#TopMenu {
+	@media ( max-width: 550px ) {
+		display: block;
+	}	
+}
 
 #Bracket {
 	display: flex;

@@ -77,6 +77,9 @@ html, body, #app, #app > div, #app > div > div {
   height: 100%;
   margin: 0; }
 
+.pure-g > div {
+  box-sizing: border-box; }
+
 .relative {
   position: relative; }
 
@@ -104,12 +107,7 @@ html, body, #app, #app > div, #app > div > div {
   background-position: center;
   background-size: 134px 70px; }
 
-#TopMenu .logo {
-  background-image: url("/images/icf-logo.png");
-  background-repeat: no-repeat;
-  background-size: contain; }
-
-#Admin {
+#Admin, #Game {
   background-image: url("/images/floral-bg-gray.jpg"); }
 
 /*Home*/
@@ -119,7 +117,8 @@ html, body, #app, #app > div, #app > div > div {
 #Home .logo,
 #Home .icon,
 #Home .title,
-#Home .entry {
+#Home .entry,
+#Home form {
   margin-left: auto;
   margin-right: auto;
   width: 60%; }
@@ -153,8 +152,19 @@ html, body, #app, #app > div, #app > div > div {
   border-radius: 40px; }
 
 /*TopMenu*/
-#TopMenu {
-  height: 70px; }
+#TopMenu .banner-logo {
+  width: 20%; }
+  @media (max-width: 550px) {
+    #TopMenu .banner-logo {
+      width: 50%; } }
+
+#TopMenu a {
+  display: block;
+  padding: 20px; }
+
+@media (max-width: 550px) {
+  #TopMenu {
+    display: block; } }
 
 #TopMenu .logo {
   height: 30px;
@@ -169,6 +179,41 @@ html, body, #app, #app > div, #app > div > div {
   float: right;
   display: block;
   cursor: pointer; }
+
+/* Game */
+#Game {
+  height: 100%;
+  overflow-x: scroll; }
+
+#Game .container {
+  text-align: center; }
+
+#Game .team1,
+#Game .team2 {
+  margin-top: 25px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto; }
+
+#Game .sub-score,
+#Game .add-score {
+  cursor: pointer; }
+
+#Game .buttons {
+  margin-top: 25px;
+  padding-top: 25px;
+  padding-bottom: 25px; }
+
+#Game .buttons button {
+  padding: 15px;
+  width: 225px;
+  border-radius: 40px; }
+
+#Game .buttons span {
+  margin-top: 15px;
+  text-decoration: underline;
+  cursor: pointer;
+  display: block; }
 
 /*Admin*/
 #Admin .container {
@@ -192,6 +237,10 @@ html, body, #app, #app > div, #app > div > div {
 #Admin form {
   margin-top: 25px;
   padding: 15px; }
+@media (max-width: 550px) {
+  #TopMenu {
+    display: block; } }
+
 #Bracket {
   display: -ms-flexbox;
   display: flex;

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 var buildTeam = function(data){
 	var name = data ? data.teamName : 'TBD',

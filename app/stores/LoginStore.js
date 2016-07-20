@@ -1,5 +1,5 @@
 import flux from 'flux-react';
-import sessionstorage from 'sessionstorage';
+// import sessionstorage from 'sessionstorage';
 
 var LoginStore = flux.createStore({
 	exports: {
