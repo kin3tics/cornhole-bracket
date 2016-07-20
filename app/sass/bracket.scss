@@ -1,0 +1,175 @@
+$bracket-headers: #353432;
+$bracket-headers-active: #696764;
+$font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+
+#TopMenu {
+	@media ( max-width: 550px ) {
+		display: block;
+	}	
+}
+
+#Bracket {
+	display: flex;
+	flex-direction: column;
+}
+
+.bracket-type {
+    padding: 20px 10px 10px;
+    font-size: 1em;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.mobile {
+	display: none;
+	@media ( max-width: 550px ) {
+		display: block;
+	}
+}
+
+
+.bracket-container{
+	display: flex;
+	flex: 1;
+	background: url(/images/floral-bg-gray.jpg);
+
+	@media ( max-width: 550px ) {
+		display: block;
+	}
+}
+
+.bracket {
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	font-family: $font-face;
+
+	&.winners {
+		width: 50%;
+		order: 1;
+		.bracket__headers,
+		.bracket__rounds {
+			flex-direction: row;
+		}
+	}
+	&.losers {
+		width: 37.5%;
+		order: 3;
+		.bracket__headers,
+		.bracket__rounds {
+			flex-direction: row-reverse;
+			@media ( max-width: 550px ) {
+				flex-direction: row;
+			}
+		}
+	}
+	&.finals {
+		width: 12.5%;
+		flex: initial;
+		order: 2;
+		.bracket__games {
+			justify-content: center;
+		}
+	}
+
+	@media ( max-width: 550px ) {
+		&.winners,
+		&.losers,
+		&.finals {
+			width: 100%;
+		}
+	}
+
+	&__rounds {
+		display: flex;
+		flex: 1;
+
+		@media ( max-width: 550px ) {
+			display: block;
+		}
+	}
+	
+	&__round {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		
+		@media ( max-width: 550px ) {
+			display: none;
+
+			&.active {
+				display: flex;
+			}
+		}
+	}
+	&__headers {
+		display: flex;
+
+
+		li {
+			flex: 1;
+			width: 100%;
+		    background: $bracket-headers;
+		    color: #fff;
+		    padding: 15px;
+			text-align: center;
+			text-transform: uppercase;
+			&.active {
+		    	background: $bracket-headers-active;
+			}
+		}
+	}
+
+	&__games {
+	    list-style: none;
+	    padding: 0;
+	    margin: 0;
+	    display: flex;
+	    flex-direction: column;
+	    flex: 1;
+    	justify-content: space-around;
+    	padding: 0 15px;
+
+		@media ( max-width: 550px ) {
+			display: block;
+		}
+
+
+		&__game {
+			background: #fff;
+			border: 1px solid #ccc;
+			margin: 10px 0;
+
+			a {
+				text-decoration: none;
+				color: inherit;
+			}
+		}
+
+		&__team {
+			padding: 10px;
+			&:first-child {
+				border-bottom: 1px solid #ccc;
+			}
+			h3 {
+			    display: inline-block;
+
+			    &.team-name {
+			    	width: 85%;
+
+			    	&.unseated,
+			    	&.unseated + .team-score {
+			    		font-style: italic;
+			    		color: #ccc;
+			    	}
+			    }
+			    &.team-score {
+			    	text-align: right;
+			    }
+			}
+		}
+
+	}
+
+}

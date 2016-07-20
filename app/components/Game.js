@@ -66,32 +66,24 @@ class Game extends React.Component {
 		}
 		if (this.state.isLoggedIn) {
 			buttons = (
-				<div className="buttons background-color-1 pure-u-1">
-					<div className="pure-g">
-						<div className="pure-u-1">
-							<button className="no-background" onClick={this.handleGameSubmit}>SUBMIT GAME</button>
-						</div>
-						{/*<div className="pure-u-1">
-							<span>FORFEIT GAME</span>
-						</div>*/}
-					</div>
-				</div>
+				<article className="submit">
+					<a href="#" className="btn-submit" onClick={this.handleGameSubmit}>{'submit game'}</a>
+					{/*<a href="#" className="btn-forfeit">{'forfeit game'}</a>*/}
+				</article>
 			);
 		}
 		return (
-			<div id="Game">
+			<div id="Scoring">
 				<TopMenu />
-				<div className="container pure-g">
-					<div className="team1 pure-u-1">
+				<div className="scoring-container">
+					<article className="scoring">
 						<TeamMatch team={team1name} score={team1score} teamScoreChange={this.handleTeam1ScoreChange} />
-					</div>
-					<div className="team2 pure-u-1">
 						<TeamMatch team={team2name} score={team2score} teamScoreChange={this.handleTeam2ScoreChange} />
-					</div>
+					</article>
 					{buttons}
 				</div>
 			</div>
-			);
+		);
 	}
 }
 

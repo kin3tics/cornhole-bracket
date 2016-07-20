@@ -17,7 +17,8 @@ html, body, #app, #app > div, #app > div > div {
 }
 
 /*Branding*/
-#Home {
+#Home,
+#TopMenu {
 	background-image: url("/images/floral-bg-red.jpg");
 }
 #Home .logo {
@@ -32,12 +33,6 @@ html, body, #app, #app > div, #app > div > div {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 134px 70px;
-}
-
-#TopMenu .logo {
-	background-image: url("/images/icf-logo.png");
-	background-repeat: no-repeat;
-	background-size: contain;
 }
 
 #Admin, #Game {background-image: url("/images/floral-bg-gray.jpg");}
@@ -88,9 +83,26 @@ html, body, #app, #app > div, #app > div > div {
 }
 
 /*TopMenu*/
+
 #TopMenu {
-	height: 70px;
+	
+	.banner-logo {
+		width: 20%;
+		@media ( max-width: 550px ) {
+			width: 50%;
+		}
+	}
+
+	a {
+		display: block;
+		padding: 20px;
+	}
+
+	@media ( max-width: 550px ) {
+		display: block;
+	}
 }
+
 #TopMenu .logo {
 	height: 30px;
 	margin-top: 20px;

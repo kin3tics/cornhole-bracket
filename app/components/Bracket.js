@@ -1,67 +1,53 @@
 import React from 'react';
 import {Link} from 'react-router';
 import BracketStore from '../stores/BracketStore';
-
 import TopMenu from './TopMenu';
+import Rounds from './Rounds';
 
-import { Events } from'../constants';
-var BracketEvents = Events.BracketEvents;
+var buildTab = function(i, len) {
+	var title = 'round ' + (i + 1);
+	if(len === 1) {
+		title = 'final';
+	} else {
+		if (len - i === 1) {
+			title = 'semi-final';
+		} else if (len - i === 2){
+			title = 'quarterfinal';
+		}
+	}
+	return title;
+};
 
 class Bracket extends React.Component {
-	constructor(props) {
-		super(props);
-		this.updateState = this.updateState.bind(this);
-		this.state = {
-			bracket: BracketStore.getBracket()
-		}
-	}
-	componentWillMount() {
-		BracketStore.fetchBracket();
-		BracketStore.on(BracketEvents.LOADED, this.updateState);
-	}
-	componentWillUnmount() {
-		BracketStore.off(BracketEvents.LOADED, this.updateState);
-	}
-	updateState() {
-		this.setState({
-			bracket: BracketStore.getBracket()
-		});
-	}
 	render() {
-		var games = (<div> Bracket has not been generated yet. </div>);
-		if(this.state.bracket && this.state.bracket.length > 1
-			 && this.state.bracket[0].rounds && this.state.bracket[0].rounds.length > 1
-			 && this.state.bracket[0].rounds[0].games && this.state.bracket[0].rounds[0].games.length > 1 ) {
-			games = (<div className="games">
-				{this.state.bracket[0].rounds[0].games.map((game) => {
-					return (
-						<div><Link to={`/game/${game.gameId}`}>
-						<div key={game.gameId} className="gamelet pure-g">
-							<div className="pure-u-1 relative">
-								<span className="vertical-align">{game.team1.teamName}</span>
-							</div>
-							<div className="pure-u-1 relative">
-								<span className="vertical-align">{game.team2.teamName}</span>
-							</div>
-						</div></Link>
-						</div>
-					);
-				})}
+		var data = this.props.data,
+			types = ['winners', 'losers', 'finals'],
+			tabs = [];
 
-			</div>);
-		}
+		var rounds = data.rounds.map(function(round, i){
+			tabs.push( buildTab(i, data.rounds.length) );
+			return (
+				<Rounds key={round._id} data={round} />
+			);
+		});
+
+		var tab = tabs.map(function(t, i){
+			return (
+				<li key={t + '_' + i}>{t}</li>
+			);
+		})
+		var jstabclass = data.type === 2 ? '' : ' js-tabs'
+
 		return (
-			<div id="Bracket">
-				<TopMenu />
-				<div className="container pure-g">
-					<div className="pure-u-1">
-						<h3>Games</h3>
-					</div>
-					<div className="pure-u-1">
-						{games}
-					</div>
+			<article className={'bracket ' + types[data.type]} >
+				<div className="bracket-type mobile">{types[data.type] + ' bracket'}</div>
+				<ul className={'bracket__headers' + jstabclass }>
+					{tab}
+				</ul>
+				<div className="bracket__rounds js-rounds">
+					{rounds}
 				</div>
-			</div>
+			</article>
 		);
 	}
 };

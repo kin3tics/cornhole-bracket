@@ -5,6 +5,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser'); 
 var compression = require('compression'); 
+var sassMiddleware = require('node-sass-middleware');
 //var favicon = require('serve-favicon'); 
 //var logger = require('morgan'); 
 var async = require('async'); 
@@ -30,10 +31,15 @@ app.use(compression());
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: false })); 
 
-var staticDir = path.join(__dirname.substring(0, __dirname.indexOf("\\server")), '/build');
-console.log(staticDir);
+app.use(sassMiddleware({
+	src: 'app/sass',
+	dest: '/build/styles',
+	debug: true,
+	force: true,
+	outputstyle: 'nested',
+	prefix: '/styles'
+}))
 app.use(express.static("build")); 
-
 
 mongoose.connect(config.database);
 mongoose.connection.on('error', function() {
@@ -61,7 +67,6 @@ app.use(function(req, res) {
 	    } 
   	}); 
 }); 
-
 
 var server = require('http').createServer(app);
 server.listen(app.get('port'), function() {

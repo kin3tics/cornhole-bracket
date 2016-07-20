@@ -6,8 +6,7 @@ class TopMenu extends React.Component {
 		return (
 		<div id="TopMenu" className="pure-g background-color-1">
 			<div className="pure-u-1">
-				<Link to={`/bracket/`}><div className="logo">
-				</div></Link>
+				<Link to={`/bracket/`}><img src="/images/icf-logo.png" className="banner-logo" /></Link>
 			</div>
 		</div>);
 	}

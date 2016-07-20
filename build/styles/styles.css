@@ -1,0 +1,467 @@
+/* Reset */
+html {
+  box-sizing: border-box;
+  word-break: break-word; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+ul {
+  list-style: none; }
+
+/* Globals */
+.background-color-1 {
+  background-color: #dd2f45; }
+
+.background-color-2 {
+  background-color: #ffffff; }
+
+.background-color-3 {
+  background-color: #363432; }
+
+.no-background {
+  background: none; }
+
+/* Home Page */
+#Home {
+  color: #ffffff; }
+
+#Home .primary-btn {
+  border: 3px solid #363432; }
+
+#Home .secondary-btn {
+  border: 3px solid #ffffff; }
+
+/*TopMenu*/
+#TopMenu .icon-hamburger {
+  background-color: #ffffff; }
+
+/* Admin Page */
+#Admin button {
+  color: #ffffff; }
+
+#Admin button {
+  border: 3px solid #363432; }
+
+#Admin .teams > div:nth-child(odd),
+#Admin form {
+  background-color: #ffffff; }
+
+#Admin .teams > div:nth-child(even) {
+  background-color: #faf9f9; }
+
+#Admin .teams > div,
+#Admin form {
+  border: 1px solid #ebeaea; }
+html, body, #app, #app > div, #app > div > div {
+  height: 100%;
+  margin: 0; }
+
+.pure-g > div {
+  box-sizing: border-box; }
+
+.relative {
+  position: relative; }
+
+.absolute {
+  position: absolute; }
+
+.vertical-align {
+  top: 50%;
+  transform: perspective(1px) translateY(-50%); }
+
+/*Branding*/
+#Home,
+#TopMenu {
+  background-image: url("/images/floral-bg-red.jpg"); }
+
+#Home .logo {
+  background-image: url("/images/icf-logo.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center; }
+
+#Home .icon {
+  background-image: url("/images/icon-cornhole.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 134px 70px; }
+
+#Admin, #Game {
+  background-image: url("/images/floral-bg-gray.jpg"); }
+
+/*Home*/
+#Home .container {
+  position: relative; }
+
+#Home .logo,
+#Home .icon,
+#Home .title,
+#Home .entry,
+#Home form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%; }
+
+#Home .logo,
+#Home .title {
+  width: 80%; }
+
+#Home .logo {
+  height: 70px; }
+
+#Home .icon {
+  height: 150px; }
+
+#Home .title {
+  height: 70px;
+  text-align: center; }
+
+#Home .entry {
+  height: 200px;
+  text-align: center;
+  margin-top: 50px; }
+
+#Home .entry > div {
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+#Home button {
+  padding: 15px;
+  width: 225px;
+  border-radius: 40px; }
+
+/*TopMenu*/
+#TopMenu .banner-logo {
+  width: 20%; }
+  @media (max-width: 550px) {
+    #TopMenu .banner-logo {
+      width: 50%; } }
+
+#TopMenu a {
+  display: block;
+  padding: 20px; }
+
+@media (max-width: 550px) {
+  #TopMenu {
+    display: block; } }
+
+#TopMenu .logo {
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 20px; }
+
+#TopMenu .icon-hamburger {
+  height: 30px;
+  width: 30px;
+  margin-top: 20px;
+  margin-right: 20px;
+  float: right;
+  display: block;
+  cursor: pointer; }
+
+/* Game */
+#Game {
+  height: 100%;
+  overflow-x: scroll; }
+
+#Game .container {
+  text-align: center; }
+
+#Game .team1,
+#Game .team2 {
+  margin-top: 25px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto; }
+
+#Game .sub-score,
+#Game .add-score {
+  cursor: pointer; }
+
+#Game .buttons {
+  margin-top: 25px;
+  padding-top: 25px;
+  padding-bottom: 25px; }
+
+#Game .buttons button {
+  padding: 15px;
+  width: 225px;
+  border-radius: 40px; }
+
+#Game .buttons span {
+  margin-top: 15px;
+  text-decoration: underline;
+  cursor: pointer;
+  display: block; }
+
+/*Admin*/
+#Admin .container {
+  text-align: center;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto; }
+
+#Admin button {
+  padding: 15px;
+  width: 225px;
+  border-radius: 40px; }
+
+#Admin .teams {
+  margin-top: 25px;
+  text-align: left; }
+
+#Admin .teams span {
+  padding-left: 50px; }
+
+#Admin form {
+  margin-top: 25px;
+  padding: 15px; }
+@media (max-width: 550px) {
+  #TopMenu {
+    display: block; } }
+
+#Bracket {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column; }
+
+.bracket-type {
+  padding: 20px 10px 10px;
+  font-size: 1em;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600; }
+
+.mobile {
+  display: none; }
+  @media (max-width: 550px) {
+    .mobile {
+      display: block; } }
+
+.bracket-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex: 1;
+      flex: 1;
+  background: url(/images/floral-bg-gray.jpg); }
+  @media (max-width: 550px) {
+    .bracket-container {
+      display: block; } }
+
+.bracket {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  width: 50%;
+  font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif; }
+  .bracket.winners {
+    width: 50%;
+    -ms-flex-order: 1;
+        order: 1; }
+    .bracket.winners .bracket__headers,
+    .bracket.winners .bracket__rounds {
+      -ms-flex-direction: row;
+          flex-direction: row; }
+  .bracket.losers {
+    width: 37.5%;
+    -ms-flex-order: 3;
+        order: 3; }
+    .bracket.losers .bracket__headers,
+    .bracket.losers .bracket__rounds {
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse; }
+      @media (max-width: 550px) {
+        .bracket.losers .bracket__headers,
+        .bracket.losers .bracket__rounds {
+          -ms-flex-direction: row;
+              flex-direction: row; } }
+  .bracket.finals {
+    width: 12.5%;
+    -ms-flex: initial;
+        flex: initial;
+    -ms-flex-order: 2;
+        order: 2; }
+    .bracket.finals .bracket__games {
+      -ms-flex-pack: center;
+          justify-content: center; }
+  @media (max-width: 550px) {
+    .bracket.winners, .bracket.losers, .bracket.finals {
+      width: 100%; } }
+  .bracket__rounds {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1;
+        flex: 1; }
+    @media (max-width: 550px) {
+      .bracket__rounds {
+        display: block; } }
+  .bracket__round {
+    -ms-flex: 1;
+        flex: 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column; }
+    @media (max-width: 550px) {
+      .bracket__round {
+        display: none; }
+        .bracket__round.active {
+          display: -ms-flexbox;
+          display: flex; } }
+  .bracket__headers {
+    display: -ms-flexbox;
+    display: flex; }
+    .bracket__headers li {
+      -ms-flex: 1;
+          flex: 1;
+      width: 100%;
+      background: #353432;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      text-transform: uppercase; }
+      .bracket__headers li.active {
+        background: #696764; }
+  .bracket__games {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex: 1;
+        flex: 1;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    padding: 0 15px; }
+    @media (max-width: 550px) {
+      .bracket__games {
+        display: block; } }
+    .bracket__games__game {
+      background: #fff;
+      border: 1px solid #ccc;
+      margin: 10px 0; }
+      .bracket__games__game a {
+        text-decoration: none;
+        color: inherit; }
+    .bracket__games__team {
+      padding: 10px; }
+      .bracket__games__team:first-child {
+        border-bottom: 1px solid #ccc; }
+      .bracket__games__team h3 {
+        display: inline-block; }
+        .bracket__games__team h3.team-name {
+          width: 85%; }
+          .bracket__games__team h3.team-name.unseated,
+          .bracket__games__team h3.team-name.unseated + .team-score {
+            font-style: italic;
+            color: #ccc; }
+        .bracket__games__team h3.team-score {
+          text-align: right; }
+#Scoring {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column; }
+
+.scoring-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex: 1;
+      flex: 1;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+  background: url(/images/floral-bg-gray.jpg); }
+
+.scoring {
+  width: 90%;
+  margin: 0 auto;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column; }
+  .scoring__team {
+    margin: 15px 0; }
+    .scoring__team h3 {
+      font-size: 2em;
+      text-align: center;
+      margin-bottom: 15px; }
+  .scoring__controls {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    background: #fff;
+    color: #343331; }
+    .scoring__controls .score-total {
+      padding: 15px;
+      text-align: center;
+      font-size: 3em;
+      font-weight: 600; }
+    .scoring__controls .score-toggle {
+      display: -ms-flexbox;
+      display: flex; }
+      .scoring__controls .score-toggle a {
+        text-align: center;
+        -ms-flex: 1;
+            flex: 1;
+        padding: 15px;
+        font-size: 3em;
+        line-height: 1;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc; }
+        .scoring__controls .score-toggle a:first-child {
+          border-right: 1px solid #ccc; }
+    .scoring__controls .score-bulls {
+      background: #fada47;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 15px; }
+    .scoring__controls a {
+      text-decoration: none;
+      color: inherit; }
+
+.submit {
+  padding: 20px;
+  background: #dd2f46; }
+  .submit .btn-submit, .submit .btn-forfeit {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 0 auto;
+    width: 80%;
+    display: block;
+    text-align: center;
+    padding: 15px 10px; }
+  .submit .btn-submit {
+    border: 4px solid #fff;
+    border-radius: 30px; }
+  .submit .btn-forfeit {
+    font-size: 0.8em; }
+
+/*# sourceMappingURL=styles.css.map*/

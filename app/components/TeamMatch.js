@@ -30,13 +30,19 @@ class TeamMatch extends React.Component {
 	}
 	render() {
 		return (
-			<div className="pure-g">
-				<div className="team-name pure-u-1"><h3> {this.state.teamName}</h3></div>
-				<div className="score background-color-2 pure-u-1"><h1> {this.state.score} </h1></div>
-				<div className="sub-score background-color-2 pure-u-1-2" onClick={this.handleScoreMinus}><h3>-</h3></div>
-				<div className="add-score background-color-2 pure-u-1-2" onClick={this.handleScorePlus}><h3>+</h3></div>
-				<div className="bullseye background-color-4 pure-u-1" onClick={this.handleScoreSpecial}><h3>BULLSEYE</h3></div>
-			</div>
+			<section className="scoring__team">
+				<h3>{this.state.teamName}</h3>
+				<div className="scoring__controls">
+					<div className="score-total">{this.state.score}</div>
+					<div className="score-toggle">
+						<a href="#" onClick={this.handleScoreMinus}>{'-'}</a>
+						<a href="#" onClick={this.handleScorePlus}>{'+'}</a>
+					</div>
+					<div className="score-bulls">
+						<a href="#" onClick={this.handleScoreSpecial}>{'Bullseye'}</a>
+					</div>
+				</div>
+			</section>
 			);
 	}
 }
