@@ -22,11 +22,11 @@ class Rounds extends React.Component {
 					<Link to={`/game/${g.gameId}`}>
 						<div className="bracket__games__team">
 							{team1}
-							<h3 className="team-score">{g.team1score || '0'}</h3>
+							<h3 className="team-score">{g.team1Score || '0'}</h3>
 						</div>
 						<div className="bracket__games__team">
 							{team2}
-							<h3 className="team-score">{g.team2score || '0'}</h3>
+							<h3 className="team-score">{g.team2Score || '0'}</h3>
 						</div>
 					</Link>
 				</li>

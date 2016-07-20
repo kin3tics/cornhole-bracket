@@ -29,6 +29,14 @@ var ApiUtils = {
 				teamActions.updateTeamSuccess(res);
 		})
 	},
+	clearTeams() {
+		xhr.postJSON(`/api/teams/clear`, null, (err,res) => {
+			if(err)
+				teamActions.updateTeamFail();
+			else
+				teamActions.updateTeamSuccess(res);
+		})
+	},
 	generateBracket() {
 		xhr.getJSON(`/api/brackets/generate`, (err, res) => {
 			if (err)

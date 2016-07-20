@@ -26747,7 +26747,7 @@
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
-	var _Bracket = __webpack_require__(278);
+	var _Bracket = __webpack_require__(279);
 	
 	var _Bracket2 = _interopRequireDefault(_Bracket);
 	
@@ -28363,15 +28363,15 @@
 	
 	var _TeamStore2 = _interopRequireDefault(_TeamStore);
 	
-	var _TeamActions = __webpack_require__(251);
+	var _BracketStore = __webpack_require__(276);
 	
-	var _TeamActions2 = _interopRequireDefault(_TeamActions);
+	var _BracketStore2 = _interopRequireDefault(_BracketStore);
 	
-	var _AddTeam = __webpack_require__(276);
+	var _AddTeam = __webpack_require__(277);
 	
 	var _AddTeam2 = _interopRequireDefault(_AddTeam);
 	
-	var _TopMenu = __webpack_require__(277);
+	var _TopMenu = __webpack_require__(278);
 	
 	var _TopMenu2 = _interopRequireDefault(_TopMenu);
 	
@@ -28426,7 +28426,12 @@
 		}, {
 			key: 'handleGenerateClick',
 			value: function handleGenerateClick(e) {
-				_TeamActions2.default.generateBracket();
+				_BracketStore2.default.generateBracket();
+			}
+		}, {
+			key: 'clearTeams',
+			value: function clearTeams() {
+				_TeamStore2.default.clearTeams();
 			}
 		}, {
 			key: 'updateState',
@@ -28471,7 +28476,7 @@
 								),
 								_react2.default.createElement(
 									'div',
-									{ className: 'pure-u-1-2 relative' },
+									{ className: 'pure-u-1-4 relative' },
 									_react2.default.createElement(
 										'ul',
 										null,
@@ -28486,7 +28491,8 @@
 											team.players[1]
 										)
 									)
-								)
+								),
+								_react2.default.createElement('div', { className: 'pure-u-1-4 relative' })
 							);
 						})
 					);
@@ -28521,6 +28527,15 @@
 							'div',
 							{ className: 'pure-u-1' },
 							teams
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'pure-u-1' },
+							_react2.default.createElement(
+								'button',
+								{ onClick: this.handleTeamsClear, className: 'background-color-3' },
+								'Clear Teams'
+							)
 						),
 						_react2.default.createElement(
 							'div',
@@ -28595,6 +28610,9 @@
 			},
 			getTeams: function getTeams() {
 				return this.teamsCache;
+			},
+			clearTeams: function clearTeams() {
+				_ApiUtil2.default.clearTeams();
 			}
 		}
 	});
@@ -28664,6 +28682,11 @@
 		},
 		deleteTeam: function deleteTeam(team) {
 			_xhr2.default.postJSON('/api/teams/' + team.teamId + '/delete', team, function (err, res) {
+				if (err) _TeamActions2.default.updateTeamFail();else _TeamActions2.default.updateTeamSuccess(res);
+			});
+		},
+		clearTeams: function clearTeams() {
+			_xhr2.default.postJSON('/api/teams/clear', null, function (err, res) {
 				if (err) _TeamActions2.default.updateTeamFail();else _TeamActions2.default.updateTeamSuccess(res);
 			});
 		},
@@ -29947,7 +29970,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var BracketActions = _fluxReact2.default.createActions(['generateBracket', 'generateBracketSuccess', 'generateBracketFail', 'loadBracketSuccess', 'loadBracketFail']);
+	var BracketActions = _fluxReact2.default.createActions(['generateBracketSuccess', 'generateBracketFail', 'loadBracketSuccess', 'loadBracketFail']);
 	
 	exports.default = BracketActions;
 
@@ -29994,6 +30017,66 @@
 
 /***/ },
 /* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _fluxReact = __webpack_require__(239);
+	
+	var _fluxReact2 = _interopRequireDefault(_fluxReact);
+	
+	var _BracketActions = __webpack_require__(273);
+	
+	var _BracketActions2 = _interopRequireDefault(_BracketActions);
+	
+	var _ApiUtil = __webpack_require__(252);
+	
+	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
+	
+	var _constants = __webpack_require__(275);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var BracketEvents = _constants.Events.BracketEvents;
+	
+	var BracketStore = _fluxReact2.default.createStore({
+		bracketCache: [],
+		actions: [_BracketActions2.default.generateBracketSuccess, _BracketActions2.default.generateBracketFail, _BracketActions2.default.loadBracketSuccess, _BracketActions2.default.loadBracketFail],
+		generateBracketSuccess: function generateBracketSuccess() {
+			this.emit(BracketEvents.GENERATED);
+		},
+		generateBracketFail: function generateBracketFail() {
+			//Failure message?
+		},
+		loadBracketSuccess: function loadBracketSuccess(bracket) {
+			this.bracketCache = bracket.data;
+			this.emit(BracketEvents.LOADED);
+		},
+		loadBracketFail: function loadBracketFail() {
+			//Failure message?
+		},
+	
+		exports: {
+			fetchBracket: function fetchBracket() {
+				_ApiUtil2.default.loadBracket();
+			},
+			getBracket: function getBracket() {
+				return this.bracketCache;
+			},
+			generateBracket: function generateBracket() {
+				_ApiUtil2.default.generateBracket();
+			}
+		}
+	});
+	
+	exports.default = BracketStore;
+
+/***/ },
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30134,7 +30217,7 @@
 	exports.default = AddTeam;
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30193,7 +30276,7 @@
 	exports.default = TopMenu;
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30210,11 +30293,11 @@
 	
 	var _reactRouter = __webpack_require__(33);
 	
-	var _BracketStore = __webpack_require__(279);
+	var _BracketStore = __webpack_require__(276);
 	
 	var _BracketStore2 = _interopRequireDefault(_BracketStore);
 	
-	var _TopMenu = __webpack_require__(277);
+	var _TopMenu = __webpack_require__(278);
 	
 	var _TopMenu2 = _interopRequireDefault(_TopMenu);
 	
@@ -30304,66 +30387,6 @@
 	exports.default = Bracket;
 
 /***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _fluxReact = __webpack_require__(239);
-	
-	var _fluxReact2 = _interopRequireDefault(_fluxReact);
-	
-	var _BracketActions = __webpack_require__(273);
-	
-	var _BracketActions2 = _interopRequireDefault(_BracketActions);
-	
-	var _ApiUtil = __webpack_require__(252);
-	
-	var _ApiUtil2 = _interopRequireDefault(_ApiUtil);
-	
-	var _constants = __webpack_require__(275);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var BracketEvents = _constants.Events.BracketEvents;
-	
-	var BracketStore = _fluxReact2.default.createStore({
-		bracketCache: [],
-		actions: [_BracketActions2.default.generateBracket, _BracketActions2.default.generateBracketSuccess, _BracketActions2.default.generateBracketFail, _BracketActions2.default.loadBracketSuccess, _BracketActions2.default.loadBracketFail],
-		generateBracket: function generateBracket() {
-			_ApiUtil2.default.generateBracket();
-		},
-		generateBracketSuccess: function generateBracketSuccess() {
-			this.emit(BracketEvents.GENERATED);
-		},
-		generateBracketFail: function generateBracketFail() {
-			//Failure message?
-		},
-		loadBracketSuccess: function loadBracketSuccess(bracket) {
-			this.bracketCache = bracket.data;
-			this.emit(BracketEvents.LOADED);
-		},
-		loadBracketFail: function loadBracketFail() {
-			//Failure message?
-		},
-	
-		exports: {
-			fetchBracket: function fetchBracket() {
-				_ApiUtil2.default.loadBracket();
-			},
-			getBracket: function getBracket() {
-				return this.bracketCache;
-			}
-		}
-	});
-	
-	exports.default = BracketStore;
-
-/***/ },
 /* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30431,7 +30454,7 @@
 								_react2.default.createElement(
 									'h3',
 									{ className: 'team-score' },
-									g.team1score || '0'
+									g.team1Score || '0'
 								)
 							),
 							_react2.default.createElement(
@@ -30441,7 +30464,7 @@
 								_react2.default.createElement(
 									'h3',
 									{ className: 'team-score' },
-									g.team2score || '0'
+									g.team2Score || '0'
 								)
 							)
 						)
@@ -30491,7 +30514,7 @@
 	
 	var _LoginStore2 = _interopRequireDefault(_LoginStore);
 	
-	var _TopMenu = __webpack_require__(277);
+	var _TopMenu = __webpack_require__(278);
 	
 	var _TopMenu2 = _interopRequireDefault(_TopMenu);
 	
@@ -30822,17 +30845,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TopMenu = __webpack_require__(277);
+	var _TopMenu = __webpack_require__(278);
 	
 	var _TopMenu2 = _interopRequireDefault(_TopMenu);
 	
 	var _reactRouter = __webpack_require__(33);
 	
-	var _BracketStore = __webpack_require__(279);
+	var _BracketStore = __webpack_require__(276);
 	
 	var _BracketStore2 = _interopRequireDefault(_BracketStore);
 	
-	var _Bracket = __webpack_require__(278);
+	var _Bracket = __webpack_require__(279);
 	
 	var _Bracket2 = _interopRequireDefault(_Bracket);
 	
@@ -57524,7 +57547,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TopMenu = __webpack_require__(277);
+	var _TopMenu = __webpack_require__(278);
 	
 	var _TopMenu2 = _interopRequireDefault(_TopMenu);
 	

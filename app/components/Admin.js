@@ -1,6 +1,6 @@
 import React from 'react';
 import TeamStore from '../stores/TeamStore';
-import TeamActions from '../actions/TeamActions';
+import BracketStore from '../stores/BracketStore';
 
 import AddTeam from './AddTeam';
 import TopMenu from './TopMenu';
@@ -32,7 +32,10 @@ class Admin extends React.Component {
 		});
 	}
 	handleGenerateClick(e) {
-		TeamActions.generateBracket();
+		BracketStore.generateBracket();
+	}
+	clearTeams() {
+		TeamStore.clearTeams();
 	}
 	updateState() {
 		this.setState({
@@ -52,11 +55,14 @@ class Admin extends React.Component {
 					return(
 					<div key={team.teamId} className="pure-g">
 						<div className="pure-u-1-2 relative"><span className="vertical-align absolute">{team.teamName}</span></div>
-						<div className="pure-u-1-2 relative">
+						<div className="pure-u-1-4 relative">
 							<ul>
 								<li>{team.players[0]}</li>
 								<li>{team.players[1]}</li>
 							</ul>
+						</div>
+						<div className="pure-u-1-4 relative">
+							{/*<button onClick={() => {this.deleteTeam(team.teamId);}}>Delete</button>*/}
 						</div>
 					</div>);
 				})}
@@ -75,6 +81,9 @@ class Admin extends React.Component {
 					</div>
 					<div className="pure-u-1">
 						{teams}
+					</div>
+					<div className="pure-u-1">
+						<button onClick={this.handleTeamsClear} className="background-color-3">Clear Teams</button>
 					</div>
 					<div className="pure-u-1">
 						<button onClick={this.handleGenerateClick} className="background-color-3">Generate Bracket</button>

@@ -30,6 +30,14 @@ teamsRouter.post('/', function(req, res, next) {
 	res.send(team);
 });
 
+teamsRouter.post('/clear', function(req, res, next) {
+	var data = req.body;
+	Team.remove({}, function(err) {
+		if(err) throw err;
+		res.status(200).send({message: 'Teams cleared.'});
+	});
+});
+
 teamsRouter.get('/:id', function(req, res, next) {
 	var teamId = req.params.id;
 

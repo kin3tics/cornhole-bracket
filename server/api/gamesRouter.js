@@ -28,22 +28,27 @@ function FinishGame(game) {
 				}
 				newGame.save(function(err) { if(err) throw err; });
 				//Losing Bracket
+				console.log(game.bracket)
 				if(game.bracket == 0) {
 				Game
 					.find({
 						bracket: 1,
-						round: 0
+						round: 1
 					})
-					.or([
-						{ team1: {$exists: false} },
-						{ team2: {$exists: false} }
-					])
-					.limit(1)
-					.exec(function(err, losingGame) {
+					.exec(function(err, losingGames) {
+						console.log(losingGames);
 						if(err) throw err;
-						if(!losingGame.team1) { losingGame.team1 = losingTeam; }
-						else if (!losingGame.team2) { losingGame.team2 = losingTeam; }
-						losinggame.save(function(err) { if(err) throw err; });
+						var losingGame = null;
+						for(var i = 0; i < losingGames.length; i++) {
+							if(!losingGame && !losingGames[i].team1 && !losingGames[i].team2) {
+								losingGame = losingGames[i];
+							}
+						}
+						if(losingGame) {
+							if(!losingGame.team1) { losingGame.team1 = losingTeam; }
+							else if (!losingGame.team2) { losingGame.team2 = losingTeam; }
+							losingGame.save(function(err) { if(err) throw err; });
+						}
 					})
 				}
 			} else {
@@ -130,6 +135,8 @@ gamesRouter.post('/:id', function(req, res, next) {
 				return res.status(404).send({ message: 'Game ' + game.gameId + ' not found.' });
 			}
 			var canFinish = false;
+			//If game is already complete then return
+			if (data.gameStatus == 2 && game.gameStatus == 2 ) { return res.send(game); }
 			//If the game hasn't started yet, start it
 			if(game.gameStatus == 0 && (data.team1Score > 0 || data.team2Score > 0)) {
 				game.gameStatus = 1;
@@ -144,10 +151,11 @@ gamesRouter.post('/:id', function(req, res, next) {
 					return res.status(500).send({ message: 'Game ' + data.gameId + ' not In Progess. Cannot change score.'});					
 				}
 			}
-			if (data.gameStatus == 2 && (data.team1Score == 21 || data.team2Score == 21)) {
-				game.gameStatus == 2;
+
+
+			if (data.gameStatus == 2 && (data.team1Score > 21 || data.team2Score > 21)) {
+				game.gameStatus = 2;
 			}
-			game.gameStatus = data.gameStatus;
 			game.save(function(err) {
 				if(err) throw err;
 				if(game.gameStatus == 2) { FinishGame(game); }
@@ -156,6 +164,13 @@ gamesRouter.post('/:id', function(req, res, next) {
 			res.send(game);
 		});
 });
+
+gamesRouter.post('/:id/delete', function(req, res, next) {
+	var data = req.body;
+	Game.remove({ gameId: data.gameId }, function(err) {
+		if(err) throw err;
+	});
+})
 
 
 module.exports = gamesRouter;

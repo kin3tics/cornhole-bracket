@@ -34,7 +34,8 @@ function generateRound(numGames, round, bracket) {
 	var round = new Round({
 		round: round,
 		roundId: mongoose.Types.ObjectId(),
-		games: 	games
+		games: 	games,
+		bracket: bracket
 	});
 	round.save(function(err) {
 		if(err) throw err;

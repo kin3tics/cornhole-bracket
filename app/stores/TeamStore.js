@@ -33,6 +33,9 @@ var TeamStore = flux.createStore({
 		},
 		getTeams() {
 			return this.teamsCache;
+		},
+		clearTeams() {
+			ApiUtil.clearTeams();
 		}
 	}
 });

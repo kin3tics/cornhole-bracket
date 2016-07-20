@@ -8,15 +8,11 @@ var BracketEvents = Events.BracketEvents;
 var BracketStore = flux.createStore({
 	bracketCache: [],
 	actions: [
-		actions.generateBracket,
 		actions.generateBracketSuccess,
 		actions.generateBracketFail,
 		actions.loadBracketSuccess,
 		actions.loadBracketFail
 	],
-	generateBracket () {
-		ApiUtil.generateBracket();
-	},
 	generateBracketSuccess () {
 		this.emit(BracketEvents.GENERATED);
 	},
@@ -36,7 +32,10 @@ var BracketStore = flux.createStore({
 		},
 		getBracket() {
 			return this.bracketCache;
-		}
+		},
+		generateBracket () {
+			ApiUtil.generateBracket();
+		},
 	}
 });
 
