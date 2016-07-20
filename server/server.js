@@ -32,8 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var staticDir = path.join(__dirname.substring(0, __dirname.indexOf("\\server")), '/build');
 console.log(staticDir);
-app.use(express.static(staticDir)); 
-
+app.use(express.static("build")); 
 
 mongoose.connect(config.database);
 mongoose.connection.on('error', function() {
@@ -61,7 +60,6 @@ app.use(function(req, res) {
 	    } 
   	}); 
 }); 
-
 
 var server = require('http').createServer(app);
 server.listen(app.get('port'), function() {

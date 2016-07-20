@@ -8,14 +8,20 @@
 .background-color-3 {
 	background-color: #363432;
 }
+.background-color-4 {
+	background-color: #fada46;
+}
 .no-background {
 	background: none;
 }
 
 /* Home Page */
-#Home {
+#Home,
+#Home a,
+#Home a:visited {
 	color: #ffffff;
 }
+
 
 #Home .primary-btn {
 	border: 3px solid #363432;
@@ -25,9 +31,28 @@
 	border: 3px solid #ffffff;
 }
 
+#Home input {
+	color: #000000;
+}
 /*TopMenu*/
 #TopMenu .icon-hamburger {
 	background-color: #ffffff;
+}
+
+/* Game */
+#Game .score,
+#Game .sub-score,
+#Game .add-score {
+	border: 1px solid #ebeaea;
+}
+
+#Game .buttons button {
+	border: 3px solid #ffffff;
+}
+
+#Game .buttons button,
+#Game .buttons span {
+	color: #ffffff;
 }
 
 /* Admin Page */
