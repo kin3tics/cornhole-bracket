@@ -30551,18 +30551,25 @@
 			_this.handleTeam1ScoreChange = _this.handleTeam1ScoreChange.bind(_this);
 			_this.handleTeam2ScoreChange = _this.handleTeam2ScoreChange.bind(_this);
 			_this.handleGameSubmit = _this.handleGameSubmit.bind(_this);
+			_this.clearTimer = _this.clearTimer.bind(_this);
+			_this.setTimer = _this.setTimer.bind(_this);
 			return _this;
 		}
 	
 		_createClass(Game, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				_GameStore2.default.fetchGame(this.state.gameId);
 				_GameStore2.default.on(GameEvents.LOADED, this.updateState);
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.setTimer();
 			}
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
+				this.clearTimer();
 				_GameStore2.default.off(GameEvents.LOADED, this.updateState);
 			}
 		}, {
@@ -30571,6 +30578,24 @@
 				this.setState({
 					game: _GameStore2.default.getGame(this.state.gameId)
 				});
+			}
+		}, {
+			key: 'setTimer',
+			value: function setTimer() {
+				var timer = this.state.timer;
+				if (timer) clearTimeout(timer);
+				_GameStore2.default.fetchGame(this.state.gameId);
+				var that = this;
+				timer = setTimeout(that.setTimer, 5000);
+				this.setState({ timer: timer });
+			}
+		}, {
+			key: 'clearTimer',
+			value: function clearTimer() {
+				var timer = this.state.timer;
+				if (timer) clearTimeout(timer);
+				timer = null;
+				this.setState({ timer: timer });
 			}
 		}, {
 			key: 'handleTeam1ScoreChange',
@@ -30920,21 +30945,25 @@
 	
 			_this.state = {
 				inBrowser: false,
-				bracket: _BracketStore2.default.getBracket()
+				bracket: _BracketStore2.default.getBracket(),
+				timer: null
 			};
 			_this.updateState = _this.updateState.bind(_this);
+			_this.clearTimer = _this.clearTimer.bind(_this);
+			_this.setTimer = _this.setTimer.bind(_this);
 			return _this;
 		}
 	
 		_createClass(Brackets, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				_BracketStore2.default.fetchBracket();
 				_BracketStore2.default.on(BracketEvents.LOADED, this.updateState);
 			}
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				//setup refresh timer
+				this.setTimer();
 				this.setState({ inBrowser: true });
 				_domUtil2.default.customResizeBind();
 				(0, _jquery2.default)(document).on('luau:resize', function () {
@@ -30951,6 +30980,7 @@
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
+				this.clearTimer();
 				_BracketStore2.default.off(BracketEvents.LOADED, this.updateState);
 			}
 		}, {
@@ -30959,6 +30989,24 @@
 				this.setState({
 					bracket: _BracketStore2.default.getBracket()
 				});
+			}
+		}, {
+			key: 'setTimer',
+			value: function setTimer() {
+				var timer = this.state.timer;
+				if (timer) clearTimeout(timer);
+				_BracketStore2.default.fetchBracket();
+				var that = this;
+				timer = setTimeout(that.setTimer, 5000);
+				this.setState({ timer: timer });
+			}
+		}, {
+			key: 'clearTimer',
+			value: function clearTimer() {
+				var timer = this.state.timer;
+				if (timer) clearTimeout(timer);
+				timer = null;
+				this.setState({ timer: timer });
 			}
 		}, {
 			key: 'render',

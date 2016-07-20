@@ -43,15 +43,19 @@ class Brackets extends React.Component {
 	  super(props);
 	  this.state= {
     		inBrowser: false,
-    		bracket: BracketStore.getBracket()
+    		bracket: BracketStore.getBracket(),
+    		timer: null
     	};
     	this.updateState = this.updateState.bind(this);
+    	this.clearTimer = this.clearTimer.bind(this);
+    	this.setTimer = this.setTimer.bind(this);
   	}
 	componentWillMount() {
-		BracketStore.fetchBracket();
 		BracketStore.on(BracketEvents.LOADED, this.updateState);
 	}
 	componentDidMount() {
+		//setup refresh timer
+		this.setTimer();
 		this.setState({inBrowser: true});
 		domUtil.customResizeBind();
 		$(document).on( 'luau:resize', function(){
@@ -66,12 +70,27 @@ class Brackets extends React.Component {
 		$(document).trigger('luau:resize');
 	}
 	componentWillUnmount() {
+		this.clearTimer();
 		BracketStore.off(BracketEvents.LOADED, this.updateState);
 	}
 	updateState() {
 		this.setState({
 			bracket: BracketStore.getBracket()
 		});
+	}
+	setTimer() {
+		var timer = this.state.timer;
+		if (timer) clearTimeout(timer);
+		BracketStore.fetchBracket();
+		var that = this;
+		timer = setTimeout(that.setTimer, 5000);
+		this.setState({ timer: timer });
+	}
+	clearTimer() {
+		var timer = this.state.timer;
+		if(timer) clearTimeout(timer);
+		timer = null;
+		this.setState({ timer: timer });
 	}
 	render() {
 		var brackets = <h3>Bracket needs to be generated</h3>

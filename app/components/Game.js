@@ -20,18 +20,37 @@ class Game extends React.Component {
 		this.handleTeam1ScoreChange = this.handleTeam1ScoreChange.bind(this);
 		this.handleTeam2ScoreChange = this.handleTeam2ScoreChange.bind(this);
 		this.handleGameSubmit = this.handleGameSubmit.bind(this);
+		this.clearTimer = this.clearTimer.bind(this);
+    	this.setTimer = this.setTimer.bind(this);
 	}
 	componentWillMount() {
-		GameStore.fetchGame(this.state.gameId);
 		GameStore.on(GameEvents.LOADED, this.updateState);
 	}
+	componentDidMount() {
+		this.setTimer();
+	}
 	componentWillUnmount() {
+		this.clearTimer();
 		GameStore.off(GameEvents.LOADED, this.updateState);
 	}
 	updateState() {
 		this.setState({
 			game: GameStore.getGame(this.state.gameId)
 		});
+	}
+	setTimer() {
+		var timer = this.state.timer;
+		if (timer) clearTimeout(timer);
+		GameStore.fetchGame(this.state.gameId);
+		var that = this;
+		timer = setTimeout(that.setTimer, 5000);
+		this.setState({ timer: timer });
+	}
+	clearTimer() {
+		var timer = this.state.timer;
+		if(timer) clearTimeout(timer);
+		timer = null;
+		this.setState({ timer: timer });
 	}
 	handleTeam1ScoreChange(scoreChange) {
 		var game = this.state.game;
