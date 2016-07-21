@@ -16,6 +16,13 @@ teamsRouter.get('/', function(req, res, next) {
 		})
 });
 
+teamsRouter.get('/clear', function(req, res, next) {
+	Team.remove({}, function(err) {
+		if(err) throw err;
+		res.status(200).send({message: 'Teams cleared.'});
+	});
+});
+
 teamsRouter.post('/', function(req, res, next) {
 	var data = req.body;
 	var team = new Team({
@@ -30,13 +37,7 @@ teamsRouter.post('/', function(req, res, next) {
 	res.send(team);
 });
 
-teamsRouter.post('/clear', function(req, res, next) {
-	var data = req.body;
-	Team.remove({}, function(err) {
-		if(err) throw err;
-		res.status(200).send({message: 'Teams cleared.'});
-	});
-});
+
 
 teamsRouter.get('/:id', function(req, res, next) {
 	var teamId = req.params.id;

@@ -6,7 +6,8 @@ var domUtils = {
 	    var debouncedResizeEvent = _.debounce(function () {
 	        $(document).trigger('luau:resize');
 	    }, 250);
-	    window.addEventListener("resize", debouncedResizeEvent, false);
+	    if(typeof window !== 'undefined')
+	    	window.addEventListener("resize", debouncedResizeEvent, false);
 	}
 
 

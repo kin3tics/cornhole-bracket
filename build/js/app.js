@@ -28368,6 +28368,7 @@
 		}, {
 			key: 'clearTeams',
 			value: function clearTeams() {
+				console.log("woot");
 				_TeamStore2.default.clearTeams();
 			}
 		}, {
@@ -28623,7 +28624,8 @@
 			});
 		},
 		clearTeams: function clearTeams() {
-			_xhr2.default.postJSON('/api/teams/clear', null, function (err, res) {
+			console.log("woo");
+			_xhr2.default.postJSON('/api/teams/clear', {}, function (err, res) {
 				if (err) _TeamActions2.default.updateTeamFail();else _TeamActions2.default.updateTeamSuccess(res);
 			});
 		},
@@ -57563,7 +57565,7 @@
 			var debouncedResizeEvent = _lodash2.default.debounce(function () {
 				(0, _jquery2.default)(document).trigger('luau:resize');
 			}, 250);
-			window.addEventListener("resize", debouncedResizeEvent, false);
+			if (typeof window !== 'undefined') window.addEventListener("resize", debouncedResizeEvent, false);
 		}
 	};
 	

@@ -35,6 +35,7 @@ class Admin extends React.Component {
 		BracketStore.generateBracket();
 	}
 	clearTeams() {
+		console.log("woot");
 		TeamStore.clearTeams();
 	}
 	updateState() {

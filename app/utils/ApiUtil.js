@@ -30,7 +30,8 @@ var ApiUtils = {
 		})
 	},
 	clearTeams() {
-		xhr.postJSON(`/api/teams/clear`, null, (err,res) => {
+		console.log("woo");
+		xhr.postJSON(`/api/teams/clear`, {}, (err,res) => {
 			if(err)
 				teamActions.updateTeamFail();
 			else
