@@ -63,7 +63,7 @@ class Home extends React.Component {
 				<div className="pure-u-1">
 					<div className="entry">
 						<div><span>USE APP AS</span></div>
-						<div><Link to={`/bracket/`}><button className="primary-btn background-color-3">COMPETITOR</button></Link></div>
+						<div><Link to={`/bracket/`}><button className="primary-btn background-color-3 btn-login">COMPETITOR</button></Link></div>
 						<div><button className="secondary-btn no-background" onClick={this.handleModeratorLogin}>MODERATOR</button></div>
 					</div>
 				</div>

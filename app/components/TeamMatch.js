@@ -19,6 +19,9 @@ class TeamMatch extends React.Component {
 			score: newProps.score
 		});
 	}
+	componentDidMount() {
+		this.teamName = this.state.teamName;
+	}
 	handleScorePlus() {
 		this.handleScore(1);
 	}
@@ -31,7 +34,7 @@ class TeamMatch extends React.Component {
 	render() {
 		return (
 			<section className="scoring__team">
-				<h3>{this.state.teamName}</h3>
+				<h3>{this.teamName}</h3>
 				<div className="scoring__controls">
 					<div className="score-total">{this.state.score}</div>
 					<div className="score-toggle">

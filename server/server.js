@@ -31,14 +31,14 @@ app.use(compression());
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: false })); 
 
-app.use(sassMiddleware({
-	src: 'app/sass',
-	dest: '/build/styles',
-	debug: true,
-	force: true,
-	outputstyle: 'nested',
-	prefix: '/styles'
-}))
+// app.use(sassMiddleware({
+// 	src: 'app/sass',
+// 	dest: '/build/styles',
+// 	debug: true,
+// 	force: true,
+// 	outputstyle: 'nested',
+// 	prefix: '/styles'
+// }))
 app.use(express.static("build")); 
 
 mongoose.connect(config.database);

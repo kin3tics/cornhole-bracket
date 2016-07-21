@@ -26692,11 +26692,11 @@
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
-	var _Brackets = __webpack_require__(283);
+	var _Brackets = __webpack_require__(286);
 	
 	var _Brackets2 = _interopRequireDefault(_Brackets);
 	
-	var _Scoring = __webpack_require__(288);
+	var _Scoring = __webpack_require__(292);
 	
 	var _Scoring2 = _interopRequireDefault(_Scoring);
 	
@@ -26933,7 +26933,7 @@
 										{ to: '/bracket/' },
 										_react2.default.createElement(
 											'button',
-											{ className: 'primary-btn background-color-3' },
+											{ className: 'primary-btn background-color-3 btn-login' },
 											'COMPETITOR'
 										)
 									)
@@ -30200,7 +30200,18 @@
 						_react2.default.createElement(
 							_reactRouter.Link,
 							{ to: '/bracket/' },
-							_react2.default.createElement('img', { src: '/images/icf-logo.png', className: 'banner-logo' })
+							_react2.default.createElement('img', { src: '/images/icf-logo.png', className: 'banner-logo' }),
+							_react2.default.createElement(
+								'h1',
+								null,
+								'Luau 2016',
+								' ',
+								_react2.default.createElement(
+									'strong',
+									null,
+									'Cornhole Tournament'
+								)
+							)
 						)
 					)
 				);
@@ -30258,7 +30269,7 @@
 			if (len - i === 1) {
 				title = 'semi-final';
 			} else if (len - i === 2) {
-				title = 'quarterfinal';
+				title = 'quarter-final';
 			}
 		}
 		return title;
@@ -30376,11 +30387,14 @@
 	
 				var game = data.games.map(function (g) {
 					var team1 = buildTeam(g.team1),
-					    team2 = buildTeam(g.team2);
+					    team2 = buildTeam(g.team2),
+					    team1score = g.team1Score,
+					    team2score = g.team2Score,
+					    whoWinning = team1score === team2score ? '' : team1score > team2score ? ' g1winning' : ' g2winning';
 	
 					return _react2.default.createElement(
 						'li',
-						{ key: g._id, className: 'bracket__games__game ' + status[g.gameStatus] },
+						{ key: g._id, className: 'bracket__games__game ' + status[g.gameStatus] + whoWinning },
 						_react2.default.createElement(
 							_reactRouter.Link,
 							{ to: '/game/' + g.gameId },
@@ -30460,6 +30474,12 @@
 	var _TeamMatch2 = _interopRequireDefault(_TeamMatch);
 	
 	var _constants = __webpack_require__(274);
+	
+	__webpack_require__(283);
+	
+	__webpack_require__(284);
+	
+	__webpack_require__(285);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30725,6 +30745,11 @@
 				});
 			}
 		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.teamName = this.state.teamName;
+			}
+		}, {
 			key: 'handleScorePlus',
 			value: function handleScorePlus() {
 				this.handleScore(1);
@@ -30748,7 +30773,7 @@
 					_react2.default.createElement(
 						'h3',
 						null,
-						this.state.teamName
+						this.teamName
 					),
 					_react2.default.createElement(
 						'div',
@@ -30793,6 +30818,24 @@
 
 /***/ },
 /* 283 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 284 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 285 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30821,19 +30864,25 @@
 	
 	var _Bracket2 = _interopRequireDefault(_Bracket);
 	
-	var _lodash = __webpack_require__(284);
+	var _lodash = __webpack_require__(287);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _jquery = __webpack_require__(286);
+	var _jquery = __webpack_require__(289);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _domUtil = __webpack_require__(287);
+	var _domUtil = __webpack_require__(290);
 	
 	var _domUtil2 = _interopRequireDefault(_domUtil);
 	
 	var _constants = __webpack_require__(274);
+	
+	__webpack_require__(283);
+	
+	__webpack_require__(284);
+	
+	__webpack_require__(291);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30846,7 +30895,9 @@
 	var BracketEvents = _constants.Events.BracketEvents;
 	
 	var initMobileBracket = function initMobileBracket(el) {
-		var tabs = el.find('.js-tabs'),
+	
+		var el = (0, _jquery2.default)('.bracket-container').find('.bracket'),
+		    tabs = el.find('.js-tabs'),
 		    rounds = el.find('.js-rounds');
 	
 		rounds.find('section:eq(0)').addClass('active');
@@ -30868,7 +30919,7 @@
 	};
 	
 	var destroyMobileBracket = function destroyMobileBracket(el) {
-		el.find('.active').removeClass('active');
+		(0, _jquery2.default)('.bracket-container').find('.active').removeClass('active');
 		return false;
 	};
 	
@@ -30894,6 +30945,8 @@
 		_createClass(Brackets, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
+				_domUtil2.default.customResizeBind();
+	
 				_BracketStore2.default.on(BracketEvents.LOADED, this.updateState);
 			}
 		}, {
@@ -30902,17 +30955,17 @@
 				//setup refresh timer
 				this.setTimer();
 				this.setState({ inBrowser: true });
-				_domUtil2.default.customResizeBind();
 				(0, _jquery2.default)(document).on('luau:resize', function () {
-					var $el = (0, _jquery2.default)('.bracket-container').find('.bracket');
 					if ((0, _jquery2.default)(window).width() < 551) {
-						initMobileBracket($el);
+						initMobileBracket();
 					} else {
-						destroyMobileBracket($el);
+						destroyMobileBracket();
 					}
 				});
 	
-				(0, _jquery2.default)(document).trigger('luau:resize');
+				setTimeout(function () {
+					(0, _jquery2.default)(document).trigger('luau:resize');
+				}, 500);
 			}
 		}, {
 			key: 'componentWillUnmount',
@@ -30979,7 +31032,7 @@
 	exports.default = Brackets;
 
 /***/ },
-/* 284 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -47387,10 +47440,10 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(285)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(288)(module), (function() { return this; }())))
 
 /***/ },
-/* 285 */
+/* 288 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -47406,7 +47459,7 @@
 
 
 /***/ },
-/* 286 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*eslint-disable no-unused-vars*/
@@ -57486,7 +57539,7 @@
 
 
 /***/ },
-/* 287 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57495,11 +57548,11 @@
 		value: true
 	});
 	
-	var _lodash = __webpack_require__(284);
+	var _lodash = __webpack_require__(287);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _jquery = __webpack_require__(286);
+	var _jquery = __webpack_require__(289);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -57517,7 +57570,13 @@
 	exports.default = domUtils;
 
 /***/ },
-/* 288 */
+/* 291 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57544,9 +57603,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	/*import 'sass/globals.scss';
-	import 'sass/main.scss';
-	import 'sass/scoring.scss';*/
+	// import 'sass/globals.scss';
+	// import 'sass/main.scss';
+	// import 'sass/scoring.scss';
 	
 	var Brackets = function (_React$Component) {
 		_inherits(Brackets, _React$Component);

@@ -6,6 +6,11 @@ import TopMenu from './TopMenu';
 import TeamMatch from './TeamMatch';
 
 import { Events } from'../constants';
+
+// import '../sass/globals.scss';
+// import '../sass/main.scss';
+// import '../sass/scoring.scss';
+
 var GameEvents = Events.GameEvents;
 
 class Game extends React.Component {

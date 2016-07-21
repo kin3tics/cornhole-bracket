@@ -1,9 +1,9 @@
 import React from 'react';
 import TopMenu from './TopMenu';
 
-/*import 'sass/globals.scss';
-import 'sass/main.scss';
-import 'sass/scoring.scss';*/
+// import 'sass/globals.scss';
+// import 'sass/main.scss';
+// import 'sass/scoring.scss';
 
 
 class Brackets extends React.Component {

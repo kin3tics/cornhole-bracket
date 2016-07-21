@@ -12,7 +12,7 @@ var buildTab = function(i, len) {
 		if (len - i === 1) {
 			title = 'semi-final';
 		} else if (len - i === 2){
-			title = 'quarterfinal';
+			title = 'quarter-final';
 		}
 	}
 	return title;

@@ -1,9 +1,12 @@
 $bracket-headers: #353432;
 $bracket-headers-active: #696764;
 $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+$breakpoint: 768px;
+
+
 
 #TopMenu {
-	@media ( max-width: 550px ) {
+	@media ( max-width: $breakpoint ) {
 		display: block;
 	}	
 }
@@ -23,7 +26,7 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 
 .mobile {
 	display: none;
-	@media ( max-width: 550px ) {
+	@media ( max-width: $breakpoint ) {
 		display: block;
 	}
 }
@@ -34,7 +37,7 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 	flex: 1;
 	background: url(/images/floral-bg-gray.jpg);
 
-	@media ( max-width: 550px ) {
+	@media ( max-width: $breakpoint ) {
 		display: block;
 	}
 }
@@ -46,7 +49,7 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 	font-family: $font-face;
 
 	&.winners {
-		width: 50%;
+		width: 42%;
 		order: 1;
 		.bracket__headers,
 		.bracket__rounds {
@@ -54,18 +57,18 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 		}
 	}
 	&.losers {
-		width: 37.5%;
+		width: 42%;
 		order: 3;
 		.bracket__headers,
 		.bracket__rounds {
 			flex-direction: row-reverse;
-			@media ( max-width: 550px ) {
+			@media ( max-width: $breakpoint ) {
 				flex-direction: row;
 			}
 		}
 	}
 	&.finals {
-		width: 12.5%;
+		width: 16%;
 		flex: initial;
 		order: 2;
 		.bracket__games {
@@ -73,7 +76,7 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 		}
 	}
 
-	@media ( max-width: 550px ) {
+	@media ( max-width: $breakpoint ) {
 		&.winners,
 		&.losers,
 		&.finals {
@@ -85,7 +88,7 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 		display: flex;
 		flex: 1;
 
-		@media ( max-width: 550px ) {
+		@media ( max-width: $breakpoint ) {
 			display: block;
 		}
 	}
@@ -95,7 +98,7 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 		display: flex;
 		flex-direction: column;
 		
-		@media ( max-width: 550px ) {
+		@media ( max-width: $breakpoint ) {
 			display: none;
 
 			&.active {
@@ -109,12 +112,17 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 
 		li {
 			flex: 1;
+			font-size: 1vw;
 			width: 100%;
 		    background: $bracket-headers;
 		    color: #fff;
 		    padding: 15px;
 			text-align: center;
 			text-transform: uppercase;
+			transition: font-size 0.3s;
+			@media ( max-width: $breakpoint ) {
+				font-size: 3vw;
+			}
 			&.active {
 		    	background: $bracket-headers-active;
 			}
@@ -131,10 +139,9 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
     	justify-content: space-around;
     	padding: 0 15px;
 
-		@media ( max-width: 550px ) {
+		@media ( max-width: $breakpoint ) {
 			display: block;
 		}
-
 
 		&__game {
 			background: #fff;
@@ -145,6 +152,30 @@ $font-face: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 				text-decoration: none;
 				color: inherit;
 			}
+
+			&.completed {
+				h3 {
+					text-decoration: line-through;
+				}
+			}
+
+			&.g1winning {
+				.bracket__games__team:first-child {
+			    	font-weight: 600;
+					h3 {
+						text-decoration: none;
+					}
+				}
+			}
+			&.g2winning {
+				.bracket__games__team:last-child {
+			    	font-weight: 600;
+			    	h3 {
+						text-decoration: none;
+					}
+				}
+			}
+
 		}
 
 		&__team {

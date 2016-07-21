@@ -15,10 +15,17 @@ class Rounds extends React.Component {
 
 		var game = data.games.map(function(g) {
 			var team1 = buildTeam(g.team1),
-				team2 = buildTeam(g.team2);
+				team2 = buildTeam(g.team2),
+				team1score = g.team1Score,
+				team2score = g.team2Score,
+				whoWinning = team1score === team2score 
+					? ''
+					: team1score > team2score 
+						? ' g1winning'
+						: ' g2winning';
 
 			return (
-				<li key={g._id} className={'bracket__games__game ' + status[g.gameStatus]}>
+				<li key={g._id} className={'bracket__games__game ' + status[g.gameStatus] + whoWinning}>
 					<Link to={`/game/${g.gameId}`}>
 						<div className="bracket__games__team">
 							{team1}

@@ -8,12 +8,24 @@ import $ from 'jquery';
 import domUtil from '../utils/domUtil';
 
 import { Events } from'../constants';
+
+
+// import '../sass/globals.scss';
+// import '../sass/main.scss';
+// import '../sass/bracket.scss';
+
+
+
+
+
 var BracketEvents = Events.BracketEvents;
 
 var initMobileBracket = function(el){
-	var tabs = el.find('.js-tabs'),
+	
+	var el = $('.bracket-container').find('.bracket'),
+		tabs = el.find('.js-tabs'),
 		rounds = el.find('.js-rounds');
-
+	
 	rounds.find('section:eq(0)').addClass('active');
 	tabs.find('li:eq(0)').addClass('active');
 
@@ -34,7 +46,7 @@ var initMobileBracket = function(el){
 };
 
 var destroyMobileBracket = function(el){
-	el.find('.active').removeClass('active');
+	$('.bracket-container').find('.active').removeClass('active');
 	return false;
 };
 
@@ -51,23 +63,26 @@ class Brackets extends React.Component {
     	this.setTimer = this.setTimer.bind(this);
   	}
 	componentWillMount() {
+		domUtil.customResizeBind();
+
 		BracketStore.on(BracketEvents.LOADED, this.updateState);
 	}
 	componentDidMount() {
 		//setup refresh timer
 		this.setTimer();
 		this.setState({inBrowser: true});
-		domUtil.customResizeBind();
 		$(document).on( 'luau:resize', function(){
-			var $el = $('.bracket-container').find('.bracket');
 			if ($(window).width() < 551) {
-				initMobileBracket($el);
+				initMobileBracket();
 			} else {
-				destroyMobileBracket($el);
+				destroyMobileBracket();
 			}
 		});
 
-		$(document).trigger('luau:resize');
+		setTimeout(function(){
+			$(document).trigger('luau:resize');
+		}, 500);
+		
 	}
 	componentWillUnmount() {
 		this.clearTimer();

@@ -74,8 +74,12 @@ ul {
 #Admin form {
   border: 1px solid #ebeaea; }
 html, body, #app, #app > div, #app > div > div {
+  min-height: 100%;
   height: 100%;
   margin: 0; }
+
+body {
+  min-height: 100%; }
 
 .pure-g > div {
   box-sizing: border-box; }
@@ -153,10 +157,27 @@ html, body, #app, #app > div, #app > div > div {
 
 /*TopMenu*/
 #TopMenu .banner-logo {
-  width: 20%; }
+  width: 20%;
+  display: inline-block;
+  vertical-align: middle; }
   @media (max-width: 550px) {
     #TopMenu .banner-logo {
       width: 50%; } }
+
+#TopMenu h1 {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  padding: 10px 10px 10px 30px;
+  font-size: 3vw;
+  text-transform: uppercase;
+  transition: font-size 0.3s; }
+  @media (max-width: 550px) {
+    #TopMenu h1 {
+      font-size: 4.5vw;
+      padding: 10px 10px 10px 0px; } }
+  #TopMenu h1 strong {
+    font-weight: 600; }
 
 #TopMenu a {
   display: block;
@@ -237,151 +258,12 @@ html, body, #app, #app > div, #app > div > div {
 #Admin form {
   margin-top: 25px;
   padding: 15px; }
-@media (max-width: 550px) {
-  #TopMenu {
-    display: block; } }
 
-#Bracket {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column; }
+.btn-login {
+  color: #ffffff; }
 
-.bracket-type {
-  padding: 20px 10px 10px;
-  font-size: 1em;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: 600; }
-
-.mobile {
-  display: none; }
-  @media (max-width: 550px) {
-    .mobile {
-      display: block; } }
-
-.bracket-container {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex: 1;
-      flex: 1;
-  background: url(/images/floral-bg-gray.jpg); }
-  @media (max-width: 550px) {
-    .bracket-container {
-      display: block; } }
-
-.bracket {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
-  width: 50%;
-  font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif; }
-  .bracket.winners {
-    width: 50%;
-    -ms-flex-order: 1;
-        order: 1; }
-    .bracket.winners .bracket__headers,
-    .bracket.winners .bracket__rounds {
-      -ms-flex-direction: row;
-          flex-direction: row; }
-  .bracket.losers {
-    width: 37.5%;
-    -ms-flex-order: 3;
-        order: 3; }
-    .bracket.losers .bracket__headers,
-    .bracket.losers .bracket__rounds {
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse; }
-      @media (max-width: 550px) {
-        .bracket.losers .bracket__headers,
-        .bracket.losers .bracket__rounds {
-          -ms-flex-direction: row;
-              flex-direction: row; } }
-  .bracket.finals {
-    width: 12.5%;
-    -ms-flex: initial;
-        flex: initial;
-    -ms-flex-order: 2;
-        order: 2; }
-    .bracket.finals .bracket__games {
-      -ms-flex-pack: center;
-          justify-content: center; }
-  @media (max-width: 550px) {
-    .bracket.winners, .bracket.losers, .bracket.finals {
-      width: 100%; } }
-  .bracket__rounds {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex: 1;
-        flex: 1; }
-    @media (max-width: 550px) {
-      .bracket__rounds {
-        display: block; } }
-  .bracket__round {
-    -ms-flex: 1;
-        flex: 1;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-        flex-direction: column; }
-    @media (max-width: 550px) {
-      .bracket__round {
-        display: none; }
-        .bracket__round.active {
-          display: -ms-flexbox;
-          display: flex; } }
-  .bracket__headers {
-    display: -ms-flexbox;
-    display: flex; }
-    .bracket__headers li {
-      -ms-flex: 1;
-          flex: 1;
-      width: 100%;
-      background: #353432;
-      color: #fff;
-      padding: 15px;
-      text-align: center;
-      text-transform: uppercase; }
-      .bracket__headers li.active {
-        background: #696764; }
-  .bracket__games {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-        flex-direction: column;
-    -ms-flex: 1;
-        flex: 1;
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
-    padding: 0 15px; }
-    @media (max-width: 550px) {
-      .bracket__games {
-        display: block; } }
-    .bracket__games__game {
-      background: #fff;
-      border: 1px solid #ccc;
-      margin: 10px 0; }
-      .bracket__games__game a {
-        text-decoration: none;
-        color: inherit; }
-    .bracket__games__team {
-      padding: 10px; }
-      .bracket__games__team:first-child {
-        border-bottom: 1px solid #ccc; }
-      .bracket__games__team h3 {
-        display: inline-block; }
-        .bracket__games__team h3.team-name {
-          width: 85%; }
-          .bracket__games__team h3.team-name.unseated,
-          .bracket__games__team h3.team-name.unseated + .team-score {
-            font-style: italic;
-            color: #ccc; }
-        .bracket__games__team h3.team-score {
-          text-align: right; }
+#Pass {
+  color: #000000; }
 #Scoring {
   display: -ms-flexbox;
   display: flex;
@@ -404,7 +286,9 @@ html, body, #app, #app > div, #app > div > div {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
-      flex-direction: column; }
+      flex-direction: column;
+  -ms-flex: 1;
+      flex: 1; }
   .scoring__team {
     margin: 15px 0; }
     .scoring__team h3 {
@@ -463,5 +347,165 @@ html, body, #app, #app > div, #app > div > div {
     border-radius: 30px; }
   .submit .btn-forfeit {
     font-size: 0.8em; }
+@media (max-width: 768px) {
+  #TopMenu {
+    display: block; } }
+
+#Bracket {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column; }
+
+.bracket-type {
+  padding: 20px 10px 10px;
+  font-size: 1em;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600; }
+
+.mobile {
+  display: none; }
+  @media (max-width: 768px) {
+    .mobile {
+      display: block; } }
+
+.bracket-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex: 1;
+      flex: 1;
+  background: url(/images/floral-bg-gray.jpg); }
+  @media (max-width: 768px) {
+    .bracket-container {
+      display: block; } }
+
+.bracket {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  width: 50%;
+  font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif; }
+  .bracket.winners {
+    width: 42%;
+    -ms-flex-order: 1;
+        order: 1; }
+    .bracket.winners .bracket__headers,
+    .bracket.winners .bracket__rounds {
+      -ms-flex-direction: row;
+          flex-direction: row; }
+  .bracket.losers {
+    width: 42%;
+    -ms-flex-order: 3;
+        order: 3; }
+    .bracket.losers .bracket__headers,
+    .bracket.losers .bracket__rounds {
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse; }
+      @media (max-width: 768px) {
+        .bracket.losers .bracket__headers,
+        .bracket.losers .bracket__rounds {
+          -ms-flex-direction: row;
+              flex-direction: row; } }
+  .bracket.finals {
+    width: 16%;
+    -ms-flex: initial;
+        flex: initial;
+    -ms-flex-order: 2;
+        order: 2; }
+    .bracket.finals .bracket__games {
+      -ms-flex-pack: center;
+          justify-content: center; }
+  @media (max-width: 768px) {
+    .bracket.winners, .bracket.losers, .bracket.finals {
+      width: 100%; } }
+  .bracket__rounds {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1;
+        flex: 1; }
+    @media (max-width: 768px) {
+      .bracket__rounds {
+        display: block; } }
+  .bracket__round {
+    -ms-flex: 1;
+        flex: 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column; }
+    @media (max-width: 768px) {
+      .bracket__round {
+        display: none; }
+        .bracket__round.active {
+          display: -ms-flexbox;
+          display: flex; } }
+  .bracket__headers {
+    display: -ms-flexbox;
+    display: flex; }
+    .bracket__headers li {
+      -ms-flex: 1;
+          flex: 1;
+      font-size: 1vw;
+      width: 100%;
+      background: #353432;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      text-transform: uppercase;
+      transition: font-size 0.3s; }
+      @media (max-width: 768px) {
+        .bracket__headers li {
+          font-size: 3vw; } }
+      .bracket__headers li.active {
+        background: #696764; }
+  .bracket__games {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex: 1;
+        flex: 1;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    padding: 0 15px; }
+    @media (max-width: 768px) {
+      .bracket__games {
+        display: block; } }
+    .bracket__games__game {
+      background: #fff;
+      border: 1px solid #ccc;
+      margin: 10px 0; }
+      .bracket__games__game a {
+        text-decoration: none;
+        color: inherit; }
+      .bracket__games__game.completed h3 {
+        text-decoration: line-through; }
+      .bracket__games__game.g1winning .bracket__games__team:first-child {
+        font-weight: 600; }
+        .bracket__games__game.g1winning .bracket__games__team:first-child h3 {
+          text-decoration: none; }
+      .bracket__games__game.g2winning .bracket__games__team:last-child {
+        font-weight: 600; }
+        .bracket__games__game.g2winning .bracket__games__team:last-child h3 {
+          text-decoration: none; }
+    .bracket__games__team {
+      padding: 10px; }
+      .bracket__games__team:first-child {
+        border-bottom: 1px solid #ccc; }
+      .bracket__games__team h3 {
+        display: inline-block; }
+        .bracket__games__team h3.team-name {
+          width: 85%; }
+          .bracket__games__team h3.team-name.unseated,
+          .bracket__games__team h3.team-name.unseated + .team-score {
+            font-style: italic;
+            color: #ccc; }
+        .bracket__games__team h3.team-score {
+          text-align: right; }
 
 /*# sourceMappingURL=styles.css.map*/
